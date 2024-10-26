@@ -1,0 +1,238 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+
+body{
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.imagem-logo{
+  display: flex;
+  flex-direction: row;
+  width: 123px;
+  height: 123px;
+}
+
+#logo-conversor{
+}
+
+header{
+  width: 100vw;
+  height: 30px;
+  background-color: #2678C9;
+}
+
+.container-header{
+  display: flex;
+  flex-direction: row;
+  min-height: 200px;
+}
+
+.triangle {
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 110px 180px 0 0;
+  border-color: #2678C9 transparent transparent transparent;
+  transform: rotate(0deg);
+}
+
+.container{
+  width: 200px;
+}
+
+.container-main{
+  min-width: 100 vw;
+  width: auto;
+  height: 70vh;
+  background-color: #D9D9D9;
+  margin: 20px;
+  display: flex;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+
+.coluna{
+  flex: 0 0 auto;
+  width: 300px;
+  height: 400px;
+  margin: 10px 0px 0px 10px;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.buscarColuna{
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F2F2F2;
+  border-radius: 5px;
+  min-width: 100%;
+  height: 5%;
+}
+
+.conteudo-coluna{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100%;
+  height: 1000px;
+  border-radius: 5px;
+  background-color: #F2F2F2;
+
+}
+
+.dropdown {
+min-width: 15em;
+position: relative;
+margin: 10px;
+/* Verificar depois */
+}
+
+.dropdown * {
+  box-sizing: border-box;
+}
+.select {
+  background: #2a2f3b;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px #2a2f3b solid;
+  border-radius: 10px;
+  padding: 1em;
+  cursor: pointer;
+  transition: backgroud 0.3s;
+}
+
+.select-clicked {
+  border: 2px #26489a solid;
+  box-shadow: 0 0 0.8em #26489a;
+}
+.select:hover{
+background: #323741;
+}
+.caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: 0.3s;
+  }
+.caret-rotate{
+  transform: rotate(180deg);
+}
+.menu {
+  list-style: none;
+  padding: 0.2em 0.5em;
+  background-color: #323741;
+  border: 1px #363a43 solid;
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  color: #9fa5b5;
+  position: relative;
+  bottom: 16px;
+  display: none;
+  transition: 0.2s;
+  z-index: 1;
+ 
+}
+.menu li{
+  padding: 0.7em 0.5em;
+  margin: 0.3em 0;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.menu li:hover{
+  background: #2a2d35;
+
+}
+.active{
+  background: #23242a;
+}
+.menu-open {
+  display: block;
+  opacity: 1;
+}
+
+
+
+
+
+/* Estilos gerais para a barra de rolagem */
+/* codigo gerado */
+
+::-webkit-scrollbar {
+  width: 1px; /* Largura da barra de rolagem vertical */
+  height: 8px; /* Altura da barra de rolagem horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Cor do fundo da barra de rolagem */
+  border-radius: 10px; /* Bordas arredondadas do fundo */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888888b4; /* Cor da barra de rolagem */
+  border-radius: 10px; /* Bordas arredondadas da barra */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Cor da barra de rolagem quando o mouse está sobre ela */
+}
+
+/* Para scrolls horizontais */
+::-webkit-scrollbar-horizontal {
+  height: 12px; /* Altura da barra de rolagem horizontal */
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #888; /* Cor da barra de rolagem horizontal */
+}
