@@ -1,22 +1,30 @@
+@font-face {
+    font-family: 'fontMontserratbold';
+    src: url('../../assets/fonts/Montserrat-Bold.ttf') format('ttf');
+    font-weight: bold; 
+  }
 
+  
 .dropdown {
     min-width: 16em;
     position: relative;
     margin: 10px;
     /* Verificar depois */
-    }
+}
     
     .dropdown * {
       box-sizing: border-box;
+      font-family: 'fontMontserrabold', sans-serif;
     }
     .select {
-      background: #2a2f3b;
-      color: #fff;
+        font-size: 0.9em;
+      background: #F2F2F2;
+      color: #000000;
       display: flex;
       height: 10px;
       justify-content: space-between;
       align-items: center;
-      border: 2px #2a2f3b solid;
+      border: 2px #d9d9d9 solid;
       border-radius: 10px;
       padding: 1em;
       cursor: pointer;
@@ -24,19 +32,21 @@
     }
     
     .select-clicked {
-      border: 2px #26489a solid;
-      box-shadow: 0 0 0.8em #26489a;
+      border: 2px #e6e5e5 solid;
+      box-shadow: 0 0 0.8em #b5c7f1;
+      transition: all  0.3s;
+
     }
     
     .select:hover{
-    background: #323741;
+    background: #e6e5e5;
     }
     .caret {
       width: 0;
       height: 0;
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
-      border-top: 6px solid #fff;
+      border-top: 6px solid #000000;
       transition: 0.3s;
       }
     .caret-rotate{
@@ -45,31 +55,33 @@
     .menu {
       list-style: none;
       padding: 0.2em 0.5em;
-      background-color: #323741;
-      border: 1px #363a43 solid;
+      background-color: #F2F2F2;
+      border: 1px #D9D9D9 solid;
       box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
       border-radius: 0.5em;
-      color: #9fa5b5;
+      color: #000000;
       position: absolute; /* Muda o posicionamento para absoluto */
       top: 60%; /* Posiciona o menu logo abaixo do seletor */
       left: 0;
       right: 0;
       display: none;
       z-index: 1; /* Garante que o menu apareça sobre outros elementos */
-     
+      font-size: 0.9em;
+      transition: all  0.3s;
+
     }
     .menu li{
       padding: 0.7em 0.5em;
       margin: 0.3em 0;
-      border-radius: 0.5em;
+      border-radius: 0.2em;
       cursor: pointer;
     }
     .menu li:hover{
-      background: #2a2d35;
+      background: #e6e5e5;
     
     }
     .active{
-      background: #23242a;
+      background: #e6e5e5;
     }
     
     .menu-open {

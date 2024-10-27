@@ -40,17 +40,40 @@
 .read-the-docs {
   color: #888;
 } */
+@font-face {
+  font-family: 'fontMontserratbold';
+  src: url('../../assets/fonts/Montserrat-Bold.ttf') format('ttf');
+  font-weight: bold; 
+}
 
 body{
+  font-family: 'fontMontserratbold', sans-serif;
   margin: 0;
   overflow-x: hidden;
+}
+
+.triangulo{
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 112px 207px 0 0;
+  border-color: #2678C9 transparent transparent transparent;
+  transform: rotate(0deg);
+
+}
+
+.container-father{
+  display: flex;
 }
 
 .imagem-logo{
   display: flex;
   flex-direction: row;
-  width: 123px;
-  height: 123px;
+  width: 140px;
+  height: 140px;
+  position: absolute;
+  left: 30px;
+  top: 20px;
 }
 
 #logo-conversor{
@@ -58,7 +81,7 @@ body{
 
 header{
   width: 100vw;
-  height: 30px;
+  height: 35px;
   background-color: #2678C9;
 }
 
@@ -68,14 +91,6 @@ header{
   min-height: 200px;
 }
 
-.triangle {
-  width: 0px;
-  height: 0px;
-  border-style: solid;
-  border-width: 110px 180px 0 0;
-  border-color: #2678C9 transparent transparent transparent;
-  transform: rotate(0deg);
-}
 
 .container{
   width: 200px;

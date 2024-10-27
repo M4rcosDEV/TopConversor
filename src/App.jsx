@@ -2,24 +2,29 @@
 import logo from './assets/Logo_Conversor.png'
 import './App.css'
 import Formulario from './components/Formulario/Formulario'
-import Dropdown from './components/Dropdown/Dropdown'
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import React from "react";
 
 function App() {
-  
+
+    
   return (
     <div>
       <header></header>
+      <section className='container-father'>
+          <div className="triangulo"></div>
+          <section className="container-header">
+            <div className='imagem-logo'>
+              <img id='logo-conversor' src={logo} className="logo" alt="Logo conversor" />
+            </div>
+            <div  className='container'>
+              <Formulario/>
+            </div>
+        </section> 
+      </section>
       
       
-
-      <section className="container-header">
-        <div className='imagem-logo'>
-          <img id='logo-conversor' src={logo} className="logo" alt="Logo conversor" />
-        </div>
-        <div  className='container'>
-          <Formulario/>
-        </div>
-      </section> 
 
       <hr />
       <section className='container-main'>

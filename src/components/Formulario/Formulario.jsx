@@ -1,19 +1,38 @@
-import * as React from "react";
-import { useState, useRef } from "react";
+
+import React, { useState, useRef, useEffect } from "react";
 import "./Formulario.css";
 import Dropdown from "../Dropdown/Dropdown";
-
+import iconFolder  from "../../assets/icons/pasta.svg";
 
 export default function Formulario() {
+
+  const [filePath, setFilePath] = useState('');
+  const [fileName, setFileName] = useState('');
   const [selectedConversion, setSelectedConversion] = useState('');
   const orientadorDisplayExcelRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   const testeConexao  = () => {
     alert('Conexão realizada com sucesso!');
 
   }
 
+  const lidarComArquivoSelecionado =  async() => {
+    console.log(window.electron);
+    
+    const paths = await window.electron.abrirArquivoExcel(); // Chama a função do preload
+    const nomeArquivo  = paths[0].split('\\').pop();
 
+    if(paths && paths.length > 0){
+      setFilePath(paths[0]);
+      setFileName(nomeArquivo);
+    }
+  };
+
+  // Usando useEffect para monitorar mudanças no fileName
+  useEffect(() => {
+    console.log(`Nome do arquivo atualizado: ${fileName}`);
+  }, [fileName]); // O efeito será executado sempre que fileName mudar
 
 
   const listConversao = ['Excel', 'Business', 'Control xhb', 'Control Postgres'];
@@ -23,28 +42,10 @@ export default function Formulario() {
 
   const handleSelect = (option) => {
     setSelectedConversion(option);
-
-    switch(option) {
-      case 'Excel':
-        orientadorDisplayExcelRef.current.style.display = 'block';
-        break;
-      case 'Business':
-        orientadorDisplayExcelRef.current.style.display = 'none';
-        break;
-      case 'Control xhb':
-        orientadorDisplayExcelRef.current.style.display = 'none';
-        break;
-      case 'Control Postgres':
-        orientadorDisplayExcelRef.current.style.display = 'none';
-        break;
-      default:
-        orientadorDisplayExcelRef.current.style.display = 'none';
-        break;
-    }
+    orientadorDisplayExcelRef.current.style.display = option === 'Excel' ? 'block' : 'none';
   };
 
  
-  
 
   return (
     <>
@@ -56,14 +57,23 @@ export default function Formulario() {
         <div id="orientador-display" ref={orientadorDisplayExcelRef}>
 
           <form className="form-group">
-            <input type="text" name="nomeBanco" id="nomeBanco" placeholder="Nome do Banco"/>
+            <div className="input-nome-banco">
+              <label htmlFor="nomeBanco">BD que ira receber os dados</label>
+              <input type="text" name="nomeBanco" id="nomeBanco" placeholder="Nome do Banco"/>
+              
+            </div>
+            
             <button type="button" id="testeConexao" onClick={testeConexao}>Testar conexão</button>
           </form>
 
           <div className="form-group-footer">
-            <Dropdown  itensList={tipoConversao} nomeLabel={'Selecione o tipo de conversão'}/> 
-            <input type="file" name="caminhoExcel" id="caminhoExcel"/>
-            <button type="button">Carregar dados</button>
+            <Dropdown  itensList={tipoConversao} nomeLabel={'Dados a serem importados'} /> 
+           {/* add input file aqui */}
+           <div onClick={lidarComArquivoSelecionado} id="buttonFilePath" style={{ backgroundColor: fileName ? '#7CFFAE' : '#F2F2F2' }}>
+              <p>{fileName? fileName : 'Selecione o caminho do excel'}</p>
+              <img src={iconFolder}/>
+            </div>
+            <button type="button" id="carregarDados">Carregar dados</button>
           </div>
         </div>
       </div>
