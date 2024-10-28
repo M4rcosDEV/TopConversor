@@ -1,3 +1,7 @@
+# OBJETIVO
+
+Aplicação tem com intuito converter diferentes tipos de base de dados, seja de excel para SQL no postgres, postgres para postgres e etc.
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
