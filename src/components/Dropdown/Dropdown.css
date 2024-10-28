@@ -1,0 +1,91 @@
+@font-face {
+    font-family: 'fontMontserratbold';
+    src: url('../../assets/fonts/Montserrat-Bold.ttf') format('ttf');
+    font-weight: bold; 
+  }
+
+  
+.dropdown {
+    min-width: 14em;
+    position: relative;
+    margin: 5px 0px 5px 0px;
+    font-size: 0.3cm;
+    /* Verificar depois */
+}
+    
+    .dropdown * {
+      box-sizing: border-box;
+      font-family: 'fontMontserrabold', sans-serif;
+    }
+    .select {
+        font-size: 0.9em;
+      background: #F2F2F2;
+      color: #000000;
+      display: flex;
+      height: 10px;
+      justify-content: space-between;
+      align-items: center;
+      border: 2px #d9d9d9 solid;
+      border-radius: 10px;
+      padding: 1em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .select-clicked {
+      border: 2px #e6e5e5 solid;
+      box-shadow: 0 0 0.8em #b5c7f1;
+      transition: all  0.3s;
+
+    }
+    
+    .select:hover{
+    background: #e6e5e5;
+    }
+    .caret {
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #000000;
+      transition: 0.3s;
+      }
+    .caret-rotate{
+      transform: rotate(180deg);
+    }
+    .menu {
+      list-style: none;
+      padding: 0.2em 0.5em;
+      background-color: #F2F2F2;
+      border: 1px #D9D9D9 solid;
+      box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+      border-radius: 0.5em;
+      color: #000000;
+      position: absolute; /* Muda o posicionamento para absoluto */
+      top: 60%; /* Posiciona o menu logo abaixo do seletor */
+      left: 0;
+      right: 0;
+      display: none;
+      z-index: 1; /* Garante que o menu apareça sobre outros elementos */
+      font-size: 0.9em;
+      transition: all  0.3s;
+
+    }
+    .menu li{
+      padding: 0.7em 0.5em;
+      margin: 0.3em 0;
+      border-radius: 0.2em;
+      cursor: pointer;
+    }
+    .menu li:hover{
+      background: #e6e5e5;
+    
+    }
+    .active{
+      background: #e6e5e5;
+    }
+    
+    .menu-open {
+      display: block;
+      opacity: 1;
+    }

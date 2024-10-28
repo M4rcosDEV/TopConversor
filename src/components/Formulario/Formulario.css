@@ -1,0 +1,143 @@
+@font-face {
+  font-family: 'fontMontserratbold';
+  src: url('../../assets/fonts/Montserrat-Bold.ttf') format('ttf');
+  font-weight: bold; 
+}
+
+body{
+  font-family: 'fontMontserratbold',  sans-serif;
+}
+
+.form-group{
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.form-group-footer{
+    margin-top: 0px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    width: 50vw;
+}
+
+.input-nome-banco{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-nome-banco label{
+  color: #9D9696;
+  font-weight: bold;
+  font-size: 10px;
+  position: relative;
+  left: 25px;
+  /* BD que ira receber os dados */
+}
+
+.input-nome-banco input{
+  width: 200px;
+  height: 33px;
+  padding: 10px;
+  background-color: #F2F2F2;
+  border: 2px solid #D9D9D9;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: 'fontMontserratbold',  sans-serif;
+}
+
+.input-nome-banco input:focus{
+  background-color: #e6e5e5;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.input-nome-banco input.active::placeholder{
+  color: #000000;
+}
+  #orientador-display{
+    display: flex;
+    display: none;
+  }
+
+  #nomeBanco{
+    margin-left: 0px;
+  }
+
+#testeConexao{
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  white-space: nowrap;
+  padding: 10px 20px; 
+  font-size: 13px; 
+  width: 150px;
+  height: 33px; 
+  border: 2px solid #D9D9D9;
+  background-color: #F2F2F2;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+#testeConexao:hover{
+  background-color: #e6e5e5;
+}
+
+#buttonFilePath{
+  display: flex;
+  white-space: nowrap;
+  border: 2px solid #D9D9D9;
+  padding: 5px;
+  border-radius: 10px;
+  height: 33px;
+  width: 300px;
+  cursor: pointer;
+}
+
+#buttonFilePath p{
+  position: relative;
+  width: 250px;
+  bottom: 10px;
+  display: flex;
+  margin-left: 5%;
+  
+  justify-content: start;
+  color: rgb(0, 0, 0);
+  font-size: 13px;
+}
+
+#carregarDados{
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  white-space: nowrap;
+  padding: 10px 20px; 
+  font-size: 13px; 
+  width: 150px;
+  height: 33px; 
+  border: 2px solid #D9D9D9;
+  background-color: #F2F2F2;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+#carregarDados:hover{
+  background-color: #e6e5e5;
+}
+
+.loading {
+  position: fixed; /* Fixa no meio da tela */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000; /* Assegura que o loading apareça acima de outros elementos */
+}
