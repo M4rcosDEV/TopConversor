@@ -26,10 +26,7 @@ function App() {
             </div>
         </section> 
       </section>
-      
-      
-
-      <hr />
+    
       <section className='container-main'>
         <ColunasInformacao/>
         

@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { DataContext } from "../../context/DataContext";
 import './ColunasInformacao.css'
 import Dropdown from '../Dropdown/Dropdown';
+import Dropdown1 from '../DropdownSearch/DropdownSearch';
 import iconOpenBox from "../../assets/icons/open-box.png";
 import laughter from "../../assets/icons/laughter.png";
 
@@ -60,7 +61,7 @@ export default function ColunasInformacao() {
                     // Para cada coluna, exibi uma lista dos valores dessa coluna em todos os itens de data
                     columnNames.map((colName, colIndex) => (
                         <div className='coluna' key={colIndex}>
-                            <Dropdown itensList={colunas} nomeLabel={'Escolha a coluna'} />
+                            <Dropdown1 itensList={colunas} nomeLabel={'Escolha a coluna'} />
                             <div className='conteudo-coluna'>
                                 {data.map((item, index) => (
                                     <p key={index} className='item-linha'>
