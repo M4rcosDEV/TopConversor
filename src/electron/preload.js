@@ -11,3 +11,9 @@ contextBridge.exposeInMainWorld('electron', {
     
 });
 
+contextBridge.exposeInMainWorld('database', {
+    connect: async (dbName) => {
+            console.log('connect chamado'); 
+            return await ipcRenderer.invoke('db-connect', dbName);
+        }
+});

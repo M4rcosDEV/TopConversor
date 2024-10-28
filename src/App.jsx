@@ -5,12 +5,15 @@ import Formulario from './components/Formulario/Formulario'
 import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import React from "react";
+import ColunasInformacao from './components/ColunasInformacao/ColunasInformacao';
+import { DataProvider } from './context/DataContext';
 
 function App() {
 
     
   return (
-    <div>
+    <DataProvider>
+      <div>
       <header></header>
       <section className='container-father'>
           <div className="triangulo"></div>
@@ -28,61 +31,15 @@ function App() {
 
       <hr />
       <section className='container-main'>
-        {/* exemplo de coluna */}
-        <div className='coluna'>
-          <span className='buscarColuna'>
-              <p>Qual coluna se refere</p>
-          </span>
-          <div className='conteudo-coluna'>
-          <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-          </div>
-          
-        </div>
-
-        <div className='coluna'>
-          <div className='buscarColuna'>
-              <p>Qual coluna se refere</p>
-          </div>
-          <div className='conteudo-coluna'>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-          </div>
-        </div>
-        <div className='coluna'>
-          <div className='buscarColuna'>
-              <p>Qual coluna se refere</p>
-          </div>
-          <div className='conteudo-coluna'>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-              <p>Informações excel</p>
-          </div>
-        </div>
+        <ColunasInformacao/>
+        
+        {/* Componente que utilizará o contexto */}
         
       </section>
  
-    </div>
+      </div>
+    </DataProvider>
+    
   )
 
 }

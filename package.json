@@ -12,17 +12,13 @@
     "electron": "electron src/electron/main.js"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.1.0",
-    "@mui/material": "^6.1.5",
-    "@mui/styled-engine-sc": "^6.1.5",
-    "bootstrap": "^5.3.3",
-    "material-ui-popup-state": "^5.3.1",
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.1",
     "primereact": "^10.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "styled-components": "^6.1.13"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

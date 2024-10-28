@@ -35,6 +35,7 @@ body{
   position: relative;
   left: 25px;
 }
+
 .input-nome-banco input{
   width: 200px;
   height: 33px;
@@ -50,6 +51,10 @@ body{
   background-color: #e6e5e5;
   box-sizing: border-box;
   outline: none;
+}
+
+.input-nome-banco input.active::placeholder{
+  color: #000000;
 }
   #orientador-display{
     display: flex;
@@ -123,4 +128,15 @@ body{
 
 #carregarDados:hover{
   background-color: #e6e5e5;
+}
+
+.loading {
+  position: fixed; /* Fixa no meio da tela */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000; /* Assegura que o loading apareça acima de outros elementos */
 }
