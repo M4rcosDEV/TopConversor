@@ -3,11 +3,13 @@ import React, { useContext, useRef, useState } from 'react';
 import { DataContext } from "../../context/DataContext";
 import './ColunasInformacao.css'
 import Dropdown from '../Dropdown/Dropdown';
-import Dropdown1 from '../DropdownSearch/DropdownSearch';
+import DropdownSearch from '../DropdownSearch/DropdownSearch';
 import iconOpenBox from "../../assets/icons/open-box.png";
 import laughter from "../../assets/icons/laughter.png";
 
 export default function ColunasInformacao() {
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [colunasSearch, setColunasSearch] = useState([]);
     const [count, setCount] = useState(0);
     const imgMove = useRef(null);
     const imglaughter = useRef(null);
@@ -52,7 +54,37 @@ export default function ColunasInformacao() {
     //console.log(columnNames)
     
     //console.log(data?.map((item)  => item["coluna2"] || ""));
+    // const verificarSelect = (option) => {
+    //     setColunasSearch((prevColunasSearch) => {
+    //       const updatedColunasSearch = [...prevColunasSearch, option];
+    //       console.log('Colunas atualizadas:', updatedColunasSearch); // Valor atualizado
+    //       return updatedColunasSearch;
+    //     });
+    //     setSelectedItem(option);
+    //     console.log('Opção selecionada:', option); 
+    //   };
 
+      const verificarSelect = (option) => {
+        setColunasSearch((prevColunasSearch) => {
+
+          // Verifica se a opção já foi adicionada
+          if (!prevColunasSearch.includes(option)) {
+            const updatedColunasSearch = [...prevColunasSearch, option];
+            console.log('Colunas atualizadas:', updatedColunasSearch); // Valor atualizado
+            return updatedColunasSearch;
+          }else{
+            alert('Já selecionado');
+            console.log('Colunas atualizadas:', updatedColunasSearch); // Valor atualizado
+            return prevColunasSearch;
+          }
+          // Retorna o estado anterior se a opção já estiver presente
+          
+        });
+        
+        setSelectedItem(option);
+        console.log('Opção selecionada:', option); 
+      };
+      
 
   return (
     <div>
@@ -61,7 +93,7 @@ export default function ColunasInformacao() {
                     // Para cada coluna, exibi uma lista dos valores dessa coluna em todos os itens de data
                     columnNames.map((colName, colIndex) => (
                         <div className='coluna' key={colIndex}>
-                            <Dropdown1 itensList={colunas} nomeLabel={'Escolha a coluna'} />
+                            <DropdownSearch itensList={colunas} nomeLabel={'Escolha a coluna'} onSelect={verificarSelect} />
                             <div className='conteudo-coluna'>
                                 {data.map((item, index) => (
                                     <p key={index} className='item-linha'>
