@@ -62,9 +62,7 @@ export default function Formulario() {
     }finally{
       setLoading(false);
     }
-    
 
-    
   };
 
   const lidarComArquivoSelecionado = async () => {
@@ -87,19 +85,27 @@ export default function Formulario() {
   // Atualizar `data` com os dados processados do arquivo
   //useEffect(() => {
     const carregarDados = () => {
-      if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
-        const numColsExcel = fileData[0].length;
-  
-        const dadosLidos = fileData.map((row) => {
-          let objetoDados = {};
-          for (let i = 0; i < numColsExcel; i++) {
-            objetoDados[`coluna${i + 1}`] = row[i];
-          }
-          return objetoDados;
-        });
-  
-        setData(dadosLidos);
+      setLoading(true);
+      try {
+        if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
+          const numColsExcel = fileData[0].length;
+    
+          const dadosLidos = fileData.map((row) => {
+            let objetoDados = {};
+            for (let i = 0; i < numColsExcel; i++) {
+              objetoDados[`coluna${i + 1}`] = row[i];
+            }
+            return objetoDados;
+          });
+    
+          setData(dadosLidos);
+        }
+      } catch (error) {
+        console.log('Erro ao carregar dados')
+      }finally{
+        setLoading(false);
       }
+      
     }
     
   //}, [fileData]);

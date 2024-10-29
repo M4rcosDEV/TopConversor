@@ -74,19 +74,17 @@ export default function ColunasInformacao() {
             return updatedColunasSearch;
           }else{
             alert('Já selecionado');
+            const updatedColunasSearch = [...prevColunasSearch];
             console.log('Colunas atualizadas:', updatedColunasSearch); // Valor atualizado
-            return prevColunasSearch;
+            return updatedColunasSearch;
           }
           // Retorna o estado anterior se a opção já estiver presente
-          
         });
         
         setSelectedItem(option);
         console.log('Opção selecionada:', option); 
       };
-      
-
-  return (
+      return (
     <div>
     <div className='colunas'>
     {data && data.length > 0 ? (
