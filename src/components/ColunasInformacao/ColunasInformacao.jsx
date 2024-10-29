@@ -82,6 +82,7 @@ export default function ColunasInformacao() {
         setSelectedItem(option);
         console.log('Opção selecionada:', option); 
       };
+<<<<<<< HEAD
       
       const handleDropdownChange = (key, valor) => {
         setVinculacoes((prev) => ({
@@ -97,6 +98,9 @@ export default function ColunasInformacao() {
       };
 
   return (
+=======
+      return (
+>>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
     <div>
     <div className='colunas'>
     {data && data.length > 0 ? (

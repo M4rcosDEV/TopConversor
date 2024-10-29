@@ -62,9 +62,13 @@ export default function Formulario() {
       setLoading(false);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
+=======
+
+>>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
   };
 
   const lidarComArquivoSelecionado = async () => {
@@ -88,6 +92,7 @@ export default function Formulario() {
   //useEffect(() => {
     const carregarDados = () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
       
       setLoading(true);
       setTimeout(()=>{
@@ -95,6 +100,10 @@ export default function Formulario() {
       setLoading(true);
       try {
 >>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
+=======
+      setLoading(true);
+      try {
+>>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
         if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
           const numColsExcel = fileData[0].length;
     
@@ -109,19 +118,25 @@ export default function Formulario() {
           setData(dadosLidos);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         setLoading(false);
       },100)
       
 
 
 =======
+=======
+>>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
       } catch (error) {
         console.log('Erro ao carregar dados')
       }finally{
         setLoading(false);
       }
       
+<<<<<<< HEAD
 >>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
+=======
+>>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
     }
     
   //}, [fileData]);
