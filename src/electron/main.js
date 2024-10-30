@@ -6,7 +6,6 @@ import { dirname } from 'path';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
 import conectarBanco from './ConfigDatabase/ConexaoDB.js';
 
-
 let mainWindow;
 
 // Define __dirname manualmente (em módulos ES6)

@@ -22,7 +22,6 @@ export default function Formulario() {
     setDatabaseName(event.target.value);
   }
 
-  
   const testeConexao = async () => {
     console.log(`Tentando conectar ao banco: ${databaseName}`);
     setLoading(true);
@@ -62,9 +61,6 @@ export default function Formulario() {
     }finally{
       setLoading(false);
     }
-    
-
-    
   };
 
   const lidarComArquivoSelecionado = async () => {
@@ -87,19 +83,27 @@ export default function Formulario() {
   // Atualizar `data` com os dados processados do arquivo
   //useEffect(() => {
     const carregarDados = () => {
-      if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
-        const numColsExcel = fileData[0].length;
-  
-        const dadosLidos = fileData.map((row) => {
-          let objetoDados = {};
-          for (let i = 0; i < numColsExcel; i++) {
-            objetoDados[`coluna${i + 1}`] = row[i];
-          }
-          return objetoDados;
-        });
-  
-        setData(dadosLidos);
-      }
+      
+      setLoading(true);
+      setTimeout(()=>{
+        if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
+          const numColsExcel = fileData[0].length;
+    
+          const dadosLidos = fileData.map((row) => {
+            let objetoDados = {};
+            for (let i = 0; i < numColsExcel; i++) {
+              objetoDados[`coluna${i + 1}`] = row[i];
+            }
+            return objetoDados;
+          });
+    
+          setData(dadosLidos);
+        }
+        setLoading(false);
+      },100)
+      
+
+
     }
     
   //}, [fileData]);
@@ -135,6 +139,7 @@ export default function Formulario() {
               <img src={iconFolder} alt="Pasta" />
             </div>
             <button type="button" id="carregarDados"  onClick={carregarDados}>Carregar dados</button>
+            {loading && <div className="loading">Carregando dados...</div>} {/* Mensagem de carregamento */}
           </div>
         </div>
 

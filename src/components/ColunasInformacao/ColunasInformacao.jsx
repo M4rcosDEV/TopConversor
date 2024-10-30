@@ -1,8 +1,6 @@
-
 import React, { useContext, useRef, useState } from 'react';
 import { DataContext } from "../../context/DataContext";
-import './ColunasInformacao.css'
-import Dropdown from '../Dropdown/Dropdown';
+import './ColunasInformacao.css';
 import DropdownSearch from '../DropdownSearch/DropdownSearch';
 import iconOpenBox from "../../assets/icons/open-box.png";
 import laughter from "../../assets/icons/laughter.png";
@@ -27,7 +25,7 @@ export default function ColunasInformacao() {
         'prociap', 'prodepr', 'regr_sa', 'regr_en', 'parfide',
         'escombo', 'agrgrad', 'lismate', 'ctnfatu', 'syngrad',
         'prouuid', 'negunid', 'divisa1', 'divisa2', 'divisa3',
-        'divisa4', 'divisa5', 'vndiven', 'codprod', 'duraiven', 
+        'divisa4', 'divisa5', 'vndiven', 'duraiven', 
         'iteiven', 'qtdiven', 'qtddevol', 'vlriven', 'tipiven', 
         'codnatu', 'tipnatu', 'veniven', 'vlrdesc', 'filprod', 
         'datvend', 'filiven', 'usonatu', 'sesprod', 'sefprod', 
@@ -51,7 +49,7 @@ export default function ColunasInformacao() {
 
     //Aqui serve pra pegar a quantidade de dados para criar uma coluna para cada
     const columnNames = data && data.length > 0 ? Object.keys(data[0]) : [];
-    //console.log(columnNames)
+    console.log(columnNames)
     
     //console.log(data?.map((item)  => item["coluna2"] || ""));
     // const verificarSelect = (option) => {
@@ -85,6 +83,18 @@ export default function ColunasInformacao() {
         console.log('Opção selecionada:', option); 
       };
       
+      const handleDropdownChange = (key, valor) => {
+        setVinculacoes((prev) => ({
+          ...prev,
+          [key]: valor, // Vincula a coluna com o valor
+        }));
+      };
+
+      const handleSubmit = () => {
+        // Aqui você pode processar os dados vinculados para enviar ao banco de dados
+        console.log(vinculacoes); // Exibe as vinculações no console
+        // Implemente a lógica de inserção no banco de dados aqui
+      };
 
   return (
     <div>
