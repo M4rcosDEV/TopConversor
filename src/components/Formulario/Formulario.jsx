@@ -61,6 +61,10 @@ export default function Formulario() {
     }finally{
       setLoading(false);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
   };
 
   const lidarComArquivoSelecionado = async () => {
@@ -83,9 +87,14 @@ export default function Formulario() {
   // Atualizar `data` com os dados processados do arquivo
   //useEffect(() => {
     const carregarDados = () => {
+<<<<<<< HEAD
       
       setLoading(true);
       setTimeout(()=>{
+=======
+      setLoading(true);
+      try {
+>>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
         if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
           const numColsExcel = fileData[0].length;
     
@@ -99,11 +108,20 @@ export default function Formulario() {
     
           setData(dadosLidos);
         }
+<<<<<<< HEAD
         setLoading(false);
       },100)
       
 
 
+=======
+      } catch (error) {
+        console.log('Erro ao carregar dados')
+      }finally{
+        setLoading(false);
+      }
+      
+>>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
     }
     
   //}, [fileData]);
