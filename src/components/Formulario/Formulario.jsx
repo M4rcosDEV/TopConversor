@@ -36,7 +36,7 @@ export default function Formulario() {
               body: `Conexão realizada com sucesso!`,
               icon: logoTop,
             });
-            textFieldBD.current.style.backgroundColor = '#8FF481';
+            textFieldBD.current.style.backgroundColor = '#86fc82';
             setConnectionStatus('Conectado com sucesso!');
             console.log(`Conectado com sucesso!`);
           }else{
@@ -45,7 +45,7 @@ export default function Formulario() {
               body: `Erro ao conectar ao banco!\n${result.error}`,
               icon: logoTop,
             });
-            textFieldBD.current.style.backgroundColor = '#d43030c4';
+            textFieldBD.current.style.backgroundColor = '#ffa1a1';
             setConnectionStatus('Erro ao conectar ao banco!');
             console.log(`Erro ao conectar ao banco!\n${result.error}`);
           }
@@ -139,7 +139,7 @@ export default function Formulario() {
 
           <div className="form-group-footer">
             <Dropdown itensList={tipoConversao} nomeLabel={'Dados a serem importados'} />
-            <div onClick={lidarComArquivoSelecionado} id="buttonFilePath" style={{ backgroundColor: fileName ? '#7CFFAE' : '#F2F2F2' }}>
+            <div onClick={lidarComArquivoSelecionado} id="buttonFilePath" style={{ backgroundColor: fileName ? '#86fc99' : '#F2F2F2' }}>
               <p>{fileName ? fileName : 'Selecione o caminho do excel'}</p>
               <img src={iconFolder} alt="Pasta" />
             </div>
