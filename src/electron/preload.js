@@ -17,3 +17,11 @@ contextBridge.exposeInMainWorld('database', {
             return await ipcRenderer.invoke('db-connect', dbName);
         }
 });
+
+contextBridge.exposeInMainWorld('api', {
+    insertData: async (data) => {
+        console.log('insert chamado'); 
+        return await ipcRenderer.invoke('insert-data', data)
+    }
+        
+});

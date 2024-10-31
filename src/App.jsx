@@ -9,8 +9,6 @@ import ColunasInformacao from './components/ColunasInformacao/ColunasInformacao'
 import { DataProvider } from './context/DataContext';
 
 function App() {
-
-    
   return (
     <DataProvider>
       <div>
@@ -29,16 +27,10 @@ function App() {
     
       <section className='container-main'>
         <ColunasInformacao/>
-        
-        {/* Componente que utilizará o contexto */}
-        
       </section>
- 
       </div>
     </DataProvider>
-    
   )
-
 }
 
 export default App
