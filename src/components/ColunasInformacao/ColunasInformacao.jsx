@@ -15,7 +15,7 @@ export default function ColunasInformacao() {
   
   const colunas =[
         'codprod', 'nomprod', 'espprod', 'graprod', 'codfabr',
-        'codfili', 'cl1prod', 'cl2prod', 'cl3prod', 'cl4prod',
+        'nome', 'idade', 'cpf', 'cl3prod', 'cl4prod',
         'depprod', 'tipprod', 'obsprod', 'desresu', 'fgedeci',
         'xyzprod', 'atuprod', 'cod_ipi', 'cod_irr', 'subfede',
         'ncmprod', 'imgprod', 'refgrad', 'codgrad', 'codregr',
@@ -49,7 +49,7 @@ export default function ColunasInformacao() {
 
     //Aqui serve pra pegar a quantidade de dados para criar uma coluna para cada
     const columnNames = data && data.length > 0 ? Object.keys(data[0]) : [];
-    console.log(columnNames)
+    //console.log(columnNames)
     
     //console.log(data?.map((item)  => item["coluna2"] || ""));
     // const verificarSelect = (option) => {
@@ -80,34 +80,93 @@ export default function ColunasInformacao() {
         });
         
         setSelectedItem(option);
-        console.log('Opção selecionada:', option); 
+        //console.log('Opção selecionada:', option); 
       };
-<<<<<<< HEAD
+
       
-      const handleDropdownChange = (key, valor) => {
-        setVinculacoes((prev) => ({
-          ...prev,
-          [key]: valor, // Vincula a coluna com o valor
+      // const handleDropdownChange = (key, valor) => {
+      //   setVinculacoes((prev) => ({
+      //     ...prev,
+      //     [key]: valor, // Vincula a coluna com o valor
+      //   }));
+      // };
+
+      // const handleSubmit = () => {
+      //   // Aqui você pode processar os dados vinculados para enviar ao banco de dados
+      //   console.log(vinculacoes); // Exibe as vinculações no console
+      //   // Implemente a lógica de inserção no banco de dados aqui
+      // };
+
+      // if(data && data.length > 0){
+      //   columnNames.map((colName, calIndex)=>(
+      //     data.map((item, index) =>(
+      //       console.log(`${item[colName]}  - ${index}`)
+      //     ))
+      //   ))
+      // }
+
+      const [columnMapping, setColumnMapping] = useState({});
+
+      // Função para atualizar o mapeamento quando uma coluna é selecionada
+      const handleColumnSelect = (selectedColumn, dbColumn) => {
+        setColumnMapping((prevMapping) => ({
+          ...prevMapping,
+          [dbColumn]: selectedColumn,
         }));
       };
+    
 
-      const handleSubmit = () => {
-        // Aqui você pode processar os dados vinculados para enviar ao banco de dados
-        console.log(vinculacoes); // Exibe as vinculações no console
-        // Implemente a lógica de inserção no banco de dados aqui
-      };
+      const handleInsertData = async () => {
+        const dataToInsert = data.map((item) => {
+            let mappedItem = {};
+            Object.entries(columnMapping).forEach(([dbColumn, excelColumn]) => {
+                if (excelColumn) {
+                    mappedItem[dbColumn] = item[excelColumn];
+                }
+            });
+            return mappedItem;
+        });
+        console.table(dataToInsert);
+        // try {
+        //     for (const item of dataToInsert) {
+        //         // Obter as chaves e valores dos itens mapeados
+        //         const columns = Object.keys(item);
+        //         const values = Object.values(item);
+        //         // console.log(`dataInsert: ${dataToInsert}`)
+        //         // console.log(`Object.keys(item): ${columns.map((item) => )}`)
+        //         // console.log(`Object.values(item): ${values}`)
+        //         // Montar a query SQL dinâmica
+        //         const query = `INSERT INTO tab_prod (${columns.join(", ")}) VALUES (${columns.map((_, i) => `$${i + 1}`).join(", ")})`;
+        //         console.log(query)
+        //         // Executar a query no banco
+        //         //await db.query(query, values);
+        //     }
+        //     console.log("Dados inseridos com sucesso!");
+        // } catch (error) {
+        //     console.error("Erro ao inserir dados:", error);
+        // }
 
-  return (
-=======
-      return (
->>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
+        try {
+          const result = await window.api.insertData(dataToInsert);
+          if (result.success) {
+              console.log('Dados inseridos com sucesso!');
+          } else {
+              console.error('Erro ao inserir dados:', result.error);
+          }
+        } catch (error) {
+            console.error('Erro ao chamar a API:', error);
+        }
+    };
+    
+
+return (
     <div>
     <div className='colunas'>
     {data && data.length > 0 ? (
                     // Para cada coluna, exibi uma lista dos valores dessa coluna em todos os itens de data
                     columnNames.map((colName, colIndex) => (
                         <div className='coluna' key={colIndex}>
-                            <DropdownSearch itensList={colunas} nomeLabel={'Escolha a coluna'} onSelect={verificarSelect} />
+                            <DropdownSearch itensList={colunas} nomeLabel={'Escolha a coluna'} onSelect={(dbColumn) => handleColumnSelect(colName, dbColumn)} />
                             <div className='conteudo-coluna'>
                                 {data.map((item, index) => (
                                     <p key={index} className='item-linha'>
@@ -126,7 +185,7 @@ export default function ColunasInformacao() {
             
         )}
     </div>
-
+    <button onClick={handleInsertData}>Inserir Dados no Banco</button>
     </div>
   );
 }

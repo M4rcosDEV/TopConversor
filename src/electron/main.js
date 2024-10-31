@@ -2,9 +2,10 @@ import { app, BrowserWindow, ipcMain, dialog, Notification } from 'electron';
 import path from 'path'; // Certifique-se de importar 'path' aqui
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
+import ConexaoDB from './ConfigDatabase/ConexaoDB.js';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
-import conectarBanco from './ConfigDatabase/ConexaoDB.js';
+const { conectarBanco, inserirDados } = ConexaoDB;
+
 
 let mainWindow;
 
@@ -79,6 +80,22 @@ ipcMain.handle('db-connect', async (event, dbName) => {
     } catch (error) {
         console.error('Erro ao conectar ao banco:', error);
         throw error; // Lança o erro para que o renderizador saiba que houve um erro
+    }
+});
+
+ipcMain.handle('insert-data', async (event, dataToInsert) => {
+    if (!dataToInsert || dataToInsert.length === 0) {
+        console.error('Nenhum dado para inserir');
+        return { success: false, error: 'Nenhum dado para inserir' };
+    }
+
+    try {
+        const result = await inserirDados(dataToInsert);
+        console.log('Resultado do insert:', result);
+        return result;
+    } catch (error) {
+        console.error('Erro ao fazer o insert:', error);
+        return { success: false, error: error.message };
     }
 });
 

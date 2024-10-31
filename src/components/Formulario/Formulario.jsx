@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, createContext, useContext } from "r
 import "./Formulario.css";
 import Dropdown from "../Dropdown/Dropdown";
 import iconFolder from "../../assets/icons/folderIcon.png";
+import imgLoading from "../../assets/icons/loading.svg";
 import logoTop from "../../assets/Logo_Conversor.png";
 import { DataContext } from "../../context/DataContext";
 
@@ -61,14 +62,8 @@ export default function Formulario() {
     }finally{
       setLoading(false);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
-=======
 
->>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
   };
 
   const lidarComArquivoSelecionado = async () => {
@@ -91,53 +86,31 @@ export default function Formulario() {
   // Atualizar `data` com os dados processados do arquivo
   //useEffect(() => {
     const carregarDados = () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
+      setLoading(true);
       
-      setLoading(true);
-      setTimeout(()=>{
-=======
-      setLoading(true);
-      try {
->>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
-=======
-      setLoading(true);
-      try {
->>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
-        if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
-          const numColsExcel = fileData[0].length;
+      setTimeout(() => {
+        try {
+          if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
+            const numColsExcel = fileData[0].length;
     
-          const dadosLidos = fileData.map((row) => {
-            let objetoDados = {};
-            for (let i = 0; i < numColsExcel; i++) {
-              objetoDados[`coluna${i + 1}`] = row[i];
-            }
-            return objetoDados;
-          });
+            const dadosLidos = fileData.map((row) => {
+              let objetoDados = {};
+              for (let i = 0; i < numColsExcel; i++) {
+                objetoDados[`coluna${i + 1}`] = row[i];
+              }
+              return objetoDados;
+            });
     
-          setData(dadosLidos);
+            setData(dadosLidos);
+          }
+        } catch (error) {
+          console.log('Erro ao carregar dados', error);
+        } finally {
+          setLoading(false);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-        setLoading(false);
-      },100)
-      
-
-
-=======
-=======
->>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
-      } catch (error) {
-        console.log('Erro ao carregar dados')
-      }finally{
-        setLoading(false);
-      }
-      
-<<<<<<< HEAD
->>>>>>> a5aa245b0203cf89c9568b4f36c8e80cc0b55c24
-=======
->>>>>>> a5aa245 (corrigido a pocicao do icone da pasta no botao de selecionar excel para ficar responsivo)
-    }
+      }, 1000);
+    };
+    
     
   //}, [fileData]);
 
@@ -162,7 +135,6 @@ export default function Formulario() {
               
             </div>
             <button type="button" id="testeConexao" onClick={testeConexao}>Testar conexão</button>
-            {loading && <div className="loading">Carregando...</div>} {/* Indicador de carregamento */}
           </form>
 
           <div className="form-group-footer">
@@ -172,7 +144,7 @@ export default function Formulario() {
               <img src={iconFolder} alt="Pasta" />
             </div>
             <button type="button" id="carregarDados"  onClick={carregarDados}>Carregar dados</button>
-            {loading && <div className="loading">Carregando dados...</div>} {/* Mensagem de carregamento */}
+            {loading && <div className="loading"><img src={imgLoading} alt="" /></div>} {/* Mensagem de carregamento */}
           </div>
         </div>
 
