@@ -2,9 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './DropdownSearch.css';
 
-function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption }) {
+function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption, desativados  }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(nomeLabel);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const menuRef = useRef(null);
   const selectRef = useRef(null);
@@ -54,25 +54,33 @@ function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption }) {
           aria-haspopup="true"
           aria-expanded={isOpen}
         >
-          <span className="selected">{selectedOption}</span>
+          <span className="selected">
+            {selectedOption || nomeLabel}
+          </span>
           <div className={`caret ${isOpen ? 'caret-rotate' : ''}`}></div>
         </div>
         {isOpen && (
           <div className="dropdownSearch-menu" ref={menuRef}>
             <ul className={`menu ${isOpen ? 'menu-open' : ''}`}>
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Digite o nome da coluna..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Digite o nome da coluna..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
                   <li
                     key={index}
-                    className={selectedOption === option ? 'active' : ''}
-                    onClick={() => selectOption(option)}
+                    className={`option-item ${selectedOption === option ? 'selected' : ''} ${
+                      desativados.includes(option) ? 'disabled' : ''
+                    }`}
+                    onClick={() => !desativados.includes(option) && selectOption(option)}
+                    style={{
+                      cursor: desativados.includes(option) ? 'not-allowed' : 'pointer',
+                      color: desativados.includes(option) ? 'red' : '#000',
+                    }}
                   >
                     {renderOption ? renderOption(option) : option}
                   </li>
@@ -93,6 +101,7 @@ DropdownSearch.propTypes = {
   nomeLabel: PropTypes.string.isRequired,
   onSelect: PropTypes.func,
   renderOption: PropTypes.func,
+  desativados: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default DropdownSearch;

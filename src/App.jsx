@@ -7,6 +7,7 @@ import 'primereact/resources/primereact.min.css';
 import React from "react";
 import ColunasInformacao from './components/ColunasInformacao/ColunasInformacao';
 import { DataProvider } from './context/DataContext';
+import DialogoInformacao from './components/DialogoInformacao/DialogoInformacao';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <ColunasInformacao/>
       </section>
       </div>
+      <DialogoInformacao/>
     </DataProvider>
   )
 }
