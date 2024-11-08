@@ -12,6 +12,7 @@ import DialogoInformacao from './components/DialogoInformacao/DialogoInformacao'
 function App() {
   return (
     <DataProvider>
+     
       <div>
       <header></header>
       <section className='container-father'>
@@ -30,7 +31,6 @@ function App() {
         <ColunasInformacao/>
       </section>
       </div>
-      <DialogoInformacao/>
     </DataProvider>
   )
 }

@@ -6,7 +6,9 @@ import imgLoading from "../../assets/icons/loading.svg";
 import logoTop from "../../assets/Logo_Conversor.png";
 import { DataContext } from "../../context/DataContext";
 import { ProgressSpinner } from 'primereact/progressspinner';
-        
+import Loading from '../Loading/Loading';
+import DialogoInformacao from "../DialogoInformacao/DialogoInformacao";
+
 
 
 export default function Formulario() {
@@ -19,6 +21,7 @@ export default function Formulario() {
   const [loading, setLoading] = useState(false);
   const [selectedConversion, setSelectedConversion] = useState('');
   const orientadorDisplayExcelRef = useRef(null);
+  const [dialogoinfo, setDialogoinfo] = useState(false);
   const textFieldBD = useRef(null);
 
   const alterarNomeDoBanco = (event) =>{
@@ -42,7 +45,7 @@ export default function Formulario() {
             setConnectionStatus('Conectado com sucesso!');
             console.log(`Conectado com sucesso!`);
           }else{
-            console.log(result);
+            console.log(result.coderror);
             new window.Notification('Teste de conexão', {
               body: `Erro ao conectar ao banco!\n${result.error}`,
               icon: logoTop,
@@ -50,6 +53,9 @@ export default function Formulario() {
             textFieldBD.current.style.backgroundColor = '#ffa1a1';
             setConnectionStatus('Erro ao conectar ao banco!');
             console.log(`Erro ao conectar ao banco!\n${result.error}`);
+            if(result.coderror === '28P01'){
+              setDialogoinfo(true);
+            }
           }
           
           } else {
@@ -69,6 +75,7 @@ export default function Formulario() {
   };
 
   const lidarComArquivoSelecionado = async () => {
+    setLoading(true);
     try {
       const resultado = await window.electron.abrirArquivoExcel();
       if (resultado) {
@@ -82,6 +89,8 @@ export default function Formulario() {
       }
     } catch (error) {
       console.log(`ERRO: ${error}`);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -146,12 +155,11 @@ export default function Formulario() {
               <img src={iconFolder} alt="Pasta" />
             </div>
             <button type="button" id="carregarDados"  onClick={carregarDados}>Carregar dados</button>
-            {loading && <div className="loading"><img src={imgLoading} alt="" /></div>} {/* Mensagem de carregamento */}
+            {loading && <Loading/>} {/* Mensagem de carregamento */}
           </div>
         </div>
-
         {/* Componente que utilizará o contexto */}
-        
+        <DialogoInformacao isOpen={dialogoinfo}/>
       </div>
     </DataContext.Provider>
   );

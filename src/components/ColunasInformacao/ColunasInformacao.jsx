@@ -145,7 +145,7 @@ return (
                         <div className='coluna' key={colIndex}>
                             <DropdownSearch itensList={colunas} nomeLabel={'Escolha a coluna'} onRemoveDisabledOption={handleRemoveDisabledOption} desativados={colunasDesativadas} onSelect={(dbColumn) => handleColumnSelect(colName, dbColumn)} />
                             <div className='conteudo-coluna'>
-                                {data.map((item, index) => (
+                                {data.slice(0, 100).map((item, index) => (
                                     <p key={index} className='item-linha'>
                                         {typeof item[colName] === 'string' ? item[colName].toUpperCase() : String(item[colName])}
                                     </p>
@@ -155,8 +155,8 @@ return (
                     ))
                 ) : (
             <div className='container-vazio'>
-                <img ref={imglaughter} src={laughter} alt="Vazio" style={{display:'none'}}/>
-                <img ref={imgMove} src={iconOpenBox} alt="Vazio" className='icon-open-box' onMouseMove={translateImg}/>
+                {/* <img ref={imglaughter} src={laughter} alt="Vazio" style={{display:'none'}}/> */}
+                <img ref={imgMove} src={iconOpenBox} alt="Vazio" className='icon-open-box'/>
                 <p >Nenhum dado disponível</p>
             </div>
             

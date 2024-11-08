@@ -21,7 +21,7 @@ const conectarBanco = async (nomeBanco) => {
         return { success: true };
     } catch (error) {
         console.error('Erro ao conectar:', error);
-        return { success: false, error: error.message };
+        return { success: false, error: error.message, coderror: error.code };
     }
 
 }
