@@ -3,18 +3,26 @@ const { Pool } = pg
 
 let database;
 
-const conectarBanco = async (nomeBanco) => {
+// let senha;
+
+// const alterarSenha = (novaSenha)  => {
+//     console.log(`SENHA: ${novaSenha}`)
+//      senha = novaSenha;
+// }
+
+const conectarBanco = async (nomeBanco, senha) => {
     if (database) {
         await database.end(); 
     }
     database = new Pool({
         user: 'postgres',
-        password: 'amstopams',
+        password: senha || 'amstopams',
         host: 'localhost',
         port: '5432',
         database: nomeBanco,
     });
 
+    console.log(`SENHA: ${senha}`)
     try {
         await database.query('SELECT NOW()');
         console.log('Conectado ao banco de dados:', nomeBanco);

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import ConexaoDB from './ConfigDatabase/ConexaoDB.js';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
-const { conectarBanco, inserirDados } = ConexaoDB;
+const { conectarBanco, inserirDados} = ConexaoDB;
 
 
 let mainWindow;
@@ -71,10 +71,12 @@ ipcMain.handle('abrir-arquivo-excel', async(event)=>{
         return { error: 'Erro ao ler os dados do Excel.' }; // Retorna um erro, se houver
     }
 });
+let dbNameGlobal = null;
 
 ipcMain.handle('db-connect', async (event, dbName) => {
+    dbNameGlobal = dbName; 
     try {
-        const result = await conectarBanco(dbName);
+        const result = await conectarBanco(dbName, null);
         console.log('Resultado da conexão:', result); // Adicione este log para verificar o resultado
         return result;
     } catch (error) {
@@ -96,6 +98,21 @@ ipcMain.handle('insert-data', async (event, dataToInsert) => {
     } catch (error) {
         console.error('Erro ao fazer o insert:', error);
         return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('alter-password',  async (event, password) => {
+    // if (!dbNameGlobal) {
+    //     throw new Error("Nome do banco de dados não foi definido. Conecte-se ao banco primeiro.");
+    // }
+
+    try {
+        const result = await conectarBanco(dbNameGlobal, password); // Usa o nome armazenado do banco
+        console.log('Resultado da conexão com senha alternativa:', result);
+        return result;
+    } catch (error) {
+        console.error('Erro ao conectar ao banco com senha alternativa:', error);
+        throw error;
     }
 });
 

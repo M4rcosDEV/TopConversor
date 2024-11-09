@@ -22,6 +22,12 @@ contextBridge.exposeInMainWorld('api', {
     insertData: async (data) => {
         console.log('insert chamado'); 
         return await ipcRenderer.invoke('insert-data', data)
-    }
-        
+    }   
+});
+
+contextBridge.exposeInMainWorld('alterarSenha', {
+    alterPassword: async (alterPass) => {
+        console.log('nova senha chamado'); 
+        return await ipcRenderer.invoke('alter-password', alterPass)
+    }   
 });

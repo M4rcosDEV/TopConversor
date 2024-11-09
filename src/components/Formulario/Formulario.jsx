@@ -28,6 +28,8 @@ export default function Formulario() {
     setDatabaseName(event.target.value);
   }
 
+
+
   const testeConexao = async () => {
     console.log(`Tentando conectar ao banco: ${databaseName}`);
     setLoading(true);
@@ -36,7 +38,6 @@ export default function Formulario() {
         const result = await window.database.connect(databaseName);
         if (result) {
           if(result.success ===  true){
-            console.log(result);
             new window.Notification('Teste de conexão', {
               body: `Conexão realizada com sucesso!`,
               icon: logoTop,
@@ -54,10 +55,11 @@ export default function Formulario() {
             setConnectionStatus('Erro ao conectar ao banco!');
             console.log(`Erro ao conectar ao banco!\n${result.error}`);
             if(result.coderror === '28P01'){
+              
               setDialogoinfo(true);
+              console.log(dialogoinfo);
             }
           }
-          
           } else {
             console.log('Deu erro no preload')
         }
@@ -70,8 +72,13 @@ export default function Formulario() {
     }finally{
       setLoading(false);
     }
+  };
 
+ 
 
+ 
+  const handleCloseDialog = () => {
+    setDialogoinfo(false);
   };
 
   const lidarComArquivoSelecionado = async () => {
@@ -133,6 +140,15 @@ export default function Formulario() {
     orientadorDisplayExcelRef.current.style.display = option === 'Excel' ? 'block' : 'none';
   };
 
+
+  const alterStatus =  (status) => {
+    if(status === 'conectado'){
+      textFieldBD.current.style.backgroundColor = '#86fc82';
+    }
+
+  }
+
+
   return (
     <DataContext.Provider value={data}>
       <div className="container">
@@ -159,7 +175,7 @@ export default function Formulario() {
           </div>
         </div>
         {/* Componente que utilizará o contexto */}
-        <DialogoInformacao isOpen={dialogoinfo}/>
+        <DialogoInformacao isOpen={dialogoinfo} onClose={handleCloseDialog} isStatus={alterStatus}/>
       </div>
     </DataContext.Provider>
   );
