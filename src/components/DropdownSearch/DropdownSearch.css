@@ -112,3 +112,21 @@
   color: red;
 
 }
+
+.clear-option{
+  cursor: pointer;
+}
+
+.complement-struct{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.clear-option {
+  width: 16px; 
+  height: 16px; 
+  object-fit: contain;
+  cursor: pointer; 
+  margin-left: 4px; 
+}

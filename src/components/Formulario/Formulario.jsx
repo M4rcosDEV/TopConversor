@@ -13,6 +13,7 @@ import DialogoInformacao from "../DialogoInformacao/DialogoInformacao";
 
 export default function Formulario() {
   const {data, setData} = useContext(DataContext);
+  const {selectedTypeOption, setSelectedTypeOption} = useContext(DataContext);
   const [databaseName, setDatabaseName] = useState('');
   const [connectionStatus, setConnectionStatus] = useState('');
   const [filePath, setFilePath] = useState('');
@@ -23,6 +24,7 @@ export default function Formulario() {
   const orientadorDisplayExcelRef = useRef(null);
   const [dialogoinfo, setDialogoinfo] = useState(false);
   const textFieldBD = useRef(null);
+  const [pendingTypeOption, setPendingTypeOption] = useState(null);
 
   const alterarNomeDoBanco = (event) =>{
     setDatabaseName(event.target.value);
@@ -104,29 +106,34 @@ export default function Formulario() {
   // Atualizar `data` com os dados processados do arquivo
   //useEffect(() => {
     const carregarDados = () => {
-      setLoading(true);
+      if (pendingTypeOption){
+        setLoading(true);
+        setSelectedTypeOption(pendingTypeOption);
+        setTimeout(() => {
+          try {
+            if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
+              const numColsExcel = fileData[0].length;
       
-      setTimeout(() => {
-        try {
-          if (Array.isArray(fileData) && fileData.length > 0 && Array.isArray(fileData[0])) {
-            const numColsExcel = fileData[0].length;
-    
-            const dadosLidos = fileData.map((row) => {
-              let objetoDados = {};
-              for (let i = 0; i < numColsExcel; i++) {
-                objetoDados[`coluna${i + 1}`] = row[i];
-              }
-              return objetoDados;
-            });
-    
-            setData(dadosLidos);
+              const dadosLidos = fileData.map((row) => {
+                let objetoDados = {};
+                for (let i = 0; i < numColsExcel; i++) {
+                  objetoDados[`coluna${i + 1}`] = row[i];
+                }
+                return objetoDados;
+              });
+      
+              setData(dadosLidos);
+            }
+          } catch (error) {
+            console.log('Erro ao carregar dados', error);
+          } finally {
+            setLoading(false);
           }
-        } catch (error) {
-          console.log('Erro ao carregar dados', error);
-        } finally {
-          setLoading(false);
-        }
-      }, 1000);
+        }, 1000);
+      }else{
+        alert('Informe se vai converter clientes ou produtos')
+      }
+      
     };
     
     
@@ -140,6 +147,9 @@ export default function Formulario() {
     orientadorDisplayExcelRef.current.style.display = option === 'Excel' ? 'block' : 'none';
   };
 
+  const handleSelectConversion = (option) => {
+    setPendingTypeOption(option);
+  }
 
   const alterStatus =  (status) => {
     if(status === 'conectado'){
@@ -165,7 +175,7 @@ export default function Formulario() {
           </form>
 
           <div className="form-group-footer">
-            <Dropdown itensList={tipoConversao} nomeLabel={'Dados a serem importados'} />
+            <Dropdown itensList={tipoConversao} nomeLabel={'Dados a serem importados'} onSelect={handleSelectConversion} />
             <div onClick={lidarComArquivoSelecionado} id="buttonFilePath" style={{ backgroundColor: fileName ? '#86fc99' : '#F2F2F2' }}>
               <p>{fileName ? fileName : 'Selecione o caminho do excel'}</p>
               <img src={iconFolder} alt="Pasta" />

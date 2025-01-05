@@ -85,14 +85,19 @@ ipcMain.handle('db-connect', async (event, dbName) => {
     }
 });
 
-ipcMain.handle('insert-data', async (event, dataToInsert) => {
+ipcMain.handle('insert-data', async (event, dataToInsert, columnMapping) => {
     if (!dataToInsert || dataToInsert.length === 0) {
         console.error('Nenhum dado para inserir');
         return { success: false, error: 'Nenhum dado para inserir' };
     }
 
+    if (!columnMapping || Object.keys(columnMapping).length === 0) {
+        console.error('Nenhum mapeamento de colunas fornecido');
+        return { success: false, error: 'Nenhum mapeamento de colunas fornecido' };
+    }
+
     try {
-        const result = await inserirDados(dataToInsert);
+        const result = await inserirDados(dataToInsert, columnMapping);
         console.log('Resultado do insert:', result);
         return result;
     } catch (error) {

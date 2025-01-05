@@ -12,7 +12,7 @@
     border: 1px solid #ccc; /* Borda ao redor das colunas */
     border-radius: 5px;    /* Bordas arredondadas */
     background-color: #f9f9f9; /* Cor de fundo das colunas */
-    min-width: 200px;       /* Largura mínima para cada coluna */
+    min-width: 240px;       /* Largura mínima para cada coluna */
 }
 
 
@@ -54,6 +54,7 @@
     filter: drop-shadow(10px 0 30px  rgba(1, 153, 255, 0.486));
 
 }
+
 
 @media (min-width: 1226px) {
     .container-vazio{
