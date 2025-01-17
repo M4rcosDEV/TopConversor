@@ -96,39 +96,7 @@ const inserirRegistros = async (tabela, registros) => {
         VALUES ${valores.join(", ")};
     `;
 
-    // Adicionando o console.log para verificar a estrutura do INSERT
-    console.log("Generated INSERT Query:", query);
-
     return await executarQuery(query);
-};
-
-const criarSequencia = (dados, coluna, valorInicial) => {
-    let contador = valorInicial;
-    return dados.map(registro => {
-        registro[coluna] = contador++;
-        return registro;
-    });
-};
-
-const preencherColunasComValores = (registros, valoresPorColuna) => {
-    return registros.map(registro => {
-        Object.entries(valoresPorColuna).forEach(([coluna, valor]) => {
-            registro[coluna] = valor; // Define o valor para a coluna específica
-        });
-        return registro;
-    });
-};
-
-
-const substituirNullPorZero = (dados, colunasComZeroPadrao) => {
-    return dados.map(registro => {
-        colunasComZeroPadrao.forEach(coluna => {
-            if (registro[coluna] === null || registro[coluna] === undefined) {
-                registro[coluna] = 0;
-            }
-        });
-        return registro;
-    });
 };
 
 const inserirDados = async (dados, columnMapping) => {
@@ -180,55 +148,30 @@ const inserirDados = async (dados, columnMapping) => {
 
     const dadosPorTabela = distribuirDadosPorTabela(dados, tabelaMap);
 
-    const { success: maxProdSuccess, maxValor: maxCodProd } = await obterMaximoValor("tab_prod", "codprod");
-    const { success: maxGradSuccess, maxValor: maxCodGrad } = await obterMaximoValor("tab_grad", "codgrad");
+    // Obter o valor máximo de `codprod`
+    const { success: maxProdSuccess, maxValor: maxCodProd, error: maxProdError } = await obterMaximoValor("tab_prod", "codprod");
 
-    if (!maxProdSuccess || !maxGradSuccess) {
-        logs.push({ type: "error", message: "Erro ao obter valores máximos." });
+    if (!maxProdSuccess) {
+        logs.push({ type: "error", message: `Erro ao obter MAX(codprod): ${maxProdError}` });
         return { success: false, logs };
     }
+    logs.push({ type: "info", message: `Maior código de produto: ${maxCodProd}` });
 
-    logs.push({ type: "info", message: `Maior codprod: ${maxCodProd}, maior codgrad: ${maxCodGrad}` });
+    // Obter o valor máximo de `codgrad`
+    const { success: maxGradSuccess, maxValor: maxCodGrad, error: maxGradError } = await obterMaximoValor("tab_grad", "codgrad");
 
-    const incrementoCodProd = parseInt(maxCodProd) + 1;
-    const incrementoCodGrad = parseInt(maxCodGrad) + 1;
+    if (!maxGradSuccess) {
+        logs.push({ type: "error", message: `Erro ao obter MAX(codgrad): ${maxGradError}` });
+        return { success: false, logs };
+    }
+    logs.push({ type: "info", message: `Maior código de grade: ${maxCodGrad}` });
 
+
+    // Inserir dados por tabela
     for (const [tabela, registros] of Object.entries(dadosPorTabela)) {
-        let registrosAtualizados = [...registros];
-
-        if (tabela === "tab_prod") {
-            registrosAtualizados = criarSequencia(registrosAtualizados, "codprod", incrementoCodProd);
-            registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
-                espprod: 0,
-            });
-        }
-
-        if (tabela === "tab_grad") {
-            registrosAtualizados = registrosAtualizados.map((registro, index) => {
-                registro.codgrad = incrementoCodGrad + index; // Incrementa codgrad sequencialmente
-                registro.codprod = incrementoCodProd + index; // Incrementa codprod sequencialmente
-                
-                return registro;
-                
-            });
-
-            registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
-                
-            });
-        }
-
-        if (tabela === "tab_esto") {
-            registrosAtualizados = criarSequencia(registrosAtualizados, "codigra", incrementoCodGrad);
-            registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
-                resiest: "J",
-            });
-        }
-
-        //registrosAtualizados = substituirNullPorZero(registrosAtualizados, ["codesto"]);
-
-        const { success, error } = await inserirRegistros(tabela, registrosAtualizados);
+        const { success, error } = await inserirRegistros(tabela, registros);
         if (success) {
-            logs.push({ type: "success", message: `Inserção na tabela ${tabela} concluída.` });
+            logs.push({ type: "success", message: `Inserção na tabela ${tabela} concluída!` });
         } else {
             logs.push({ type: "error", message: `Erro ao inserir na tabela ${tabela}: ${error.message}` });
         }

@@ -1,0 +1,86 @@
+.log-icon-container {
+    position: relative; /* Define a imagem como referência */
+    width: 20px; /* Ajuste o tamanho do contêiner conforme necessário */
+    height: 20px;
+}
+
+.log-icon {
+    width: 100%; /* Garante que a imagem preencha o contêiner */
+    height: 100%;
+}
+
+.count-log {
+    position: absolute; /* Posiciona o contador em relação ao contêiner */
+    top: -25px; /* Alinha ao topo */
+    right: -15px; /* Alinha à direita */
+    background-color: red; /* Fundo para destacar o número */
+    color: white; /* Cor do texto */
+    font-size: 12px; /* Tamanho do texto */
+    font-weight: bold; /* Texto em negrito */
+    border-radius: 50%; /* Deixa o fundo redondo */
+    width: 18px; /* Tamanho do círculo */
+    height: 18px;
+    display: flex; /* Centraliza o número no círculo */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
+}
+
+/* Estilização principal do contêiner */
+.log-container-descricao
+{
+    display: absolute;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto; /* Centraliza o contêiner horizontalmente */
+}
+
+/* Título */
+.log-container-descricao h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Lista de logs */
+.log-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%; /* Garante que os itens ocupem o espaço disponível */
+}
+
+/* Itens da lista */
+.log-item {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Estilo para mensagens de erro */
+.log-item.error {
+    background-color: #ffe6e6;
+    color: #ff4d4d;
+}
+
+/* Estilo para mensagens de sucesso */
+.log-item.success {
+    background-color: #e6ffe6;
+    color: #33cc33;
+}
+
+/* Hover para os itens */
+.log-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}

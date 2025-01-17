@@ -8,29 +8,33 @@ import React from "react";
 import ColunasInformacao from './components/ColunasInformacao/ColunasInformacao';
 import { DataProvider } from './context/DataContext';
 import DialogoInformacao from './components/DialogoInformacao/DialogoInformacao';
+import LogViewer from './components/LogViewer/LogViewer';
 
 function App() {
   return (
     <DataProvider>
-     
       <div>
       <header></header>
       <section className='container-father'>
           <div className="triangulo"></div>
           <section className="container-header">
+            
             <div className='imagem-logo'>
               <img id='logo-conversor' src={logo} className="logo" alt="Logo conversor" />
             </div>
             <div  className='container'>
               <Formulario/>
+              
             </div>
         </section> 
+        <LogViewer/>
       </section>
     
       <section className='container-main'>
         <ColunasInformacao/>
       </section>
       </div>
+      
     </DataProvider>
   )
 }

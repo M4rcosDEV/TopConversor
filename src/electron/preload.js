@@ -32,3 +32,7 @@ contextBridge.exposeInMainWorld('alterarSenha', {
         return await ipcRenderer.invoke('alter-password', alterPass)
     }   
 });
+
+contextBridge.exposeInMainWorld('electronAPI', {
+    onLogMessage: (callback) => ipcRenderer.on('new-log', (event, logData) => callback(logData))
+});

@@ -7,6 +7,7 @@
     const [fileName, setFileName] = useState('');
     const [filePath, setFilePath] = useState('');
     const [selectedTypeOption, setSelectedTypeOption] = useState(''); 
+    const [logs, setLogs] = useState([]);
 
     return (
       <DataContext.Provider value={
@@ -18,7 +19,9 @@
          filePath, 
          setFilePath, 
          selectedTypeOption, 
-         setSelectedTypeOption 
+         setSelectedTypeOption,
+         logs,
+         setLogs
         }
       }>
       {children}

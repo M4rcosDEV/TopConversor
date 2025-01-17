@@ -40,8 +40,10 @@ function createWindow() {
         true,
         path.join(__dirname, '..', 'assets', 'Logo_Conversor.png'),
     );
-}
 
+    
+    
+}
 //Aqui eu vou colocar o seletor de arquivo com o dialog pq o input da web é muito ruim
 
 ipcMain.handle('abrir-arquivo-excel', async(event)=>{
@@ -102,7 +104,8 @@ ipcMain.handle('insert-data', async (event, dataToInsert, columnMapping) => {
         return result;
     } catch (error) {
         console.error('Erro ao fazer o insert:', error);
-        return { success: false, error: error.message };
+
+        return { success: false, logs: [{ type: "error", message: error.message }] };
     }
 });
 
@@ -120,6 +123,21 @@ ipcMain.handle('alter-password',  async (event, password) => {
         throw error;
     }
 });
+
+
+// ipcMain.on('log-message', (event, { level, message }) => {
+//     if (level === 'info') {
+//         console.info(message);
+//     } else if (level === 'error') {
+//         console.error(message);
+//     }
+
+//     // Enviar o log para o preload e, consequentemente, para o React
+//     const mainWindow = MainModule.getMainWindow();
+//     if (mainWindow) {
+//         mainWindow.webContents.send('log-message', { level, message });
+//     }
+// });
 
 app.on('ready', createWindow);
 
@@ -148,3 +166,5 @@ app.on('activate', function () {
         createWindow();
     }
 });
+
+
