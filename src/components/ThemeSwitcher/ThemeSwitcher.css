@@ -1,0 +1,13 @@
+.update-icon-container {
+    position: relative; /* Define a imagem como referência */
+    width: 20px; /* Ajuste o tamanho do contêiner conforme necessário */
+    height: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.update-icon {
+    width: 100%; /* Garante que a imagem preencha o contêiner */
+    height: 100%;
+    cursor: pointer;
+}

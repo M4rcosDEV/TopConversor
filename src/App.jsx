@@ -10,6 +10,7 @@ import { DataProvider } from './context/DataContext';
 import DialogoInformacao from './components/DialogoInformacao/DialogoInformacao';
 import LogViewer from './components/LogViewer/LogViewer';
 import UpdateViewer from './components/UpdateViewer/UpdateViewer';
+import ThemeSwitcher from './components/ThemeSwitcher/ThemeSwitcher';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         </section> 
         <LogViewer/>
         <UpdateViewer/>
+        <ThemeSwitcher/>
       </section>
     
       <section className='container-main'>

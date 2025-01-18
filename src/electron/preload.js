@@ -43,3 +43,8 @@ contextBridge.exposeInMainWorld('alterarSenha', {
 contextBridge.exposeInMainWorld('electronAPI', {
     onLogMessage: (callback) => ipcRenderer.on('new-log', (event, logData) => callback(logData))
 });
+
+contextBridge.exposeInMainWorld('theme', {
+    load: () => ipcRenderer.invoke('load-theme'),
+    save: (theme) => ipcRenderer.invoke('save-theme', theme),
+});

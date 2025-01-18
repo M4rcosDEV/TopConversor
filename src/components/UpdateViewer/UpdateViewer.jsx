@@ -14,6 +14,20 @@ const UpdateViewer = () => {
         fetchData: `
             SELECT * FROM tab_prod;
         `,
+        updateFandPJ: `
+            update tab_ende set cgcende= cpf_cnpj(cgcende);
+            update tab_parc set cnpparc= cpf_cnpj(cnpparc);
+
+            UPDATE tab_parc
+            SET pesparc = CASE
+                WHEN LENGTH(e.cgcende) = 18 THEN 'J'  -- CNPJ com pontuação
+                WHEN LENGTH(e.cgcende) = 14 THEN 'F'  -- CPF com pontuação
+                ELSE pesparc -- Mantém o valor atual caso não seja CPF ou CNPJ válido
+            END
+            FROM tab_ende e
+            WHERE tab_parc.codparc = e.codparc  -- Assumindo que as tabelas têm uma coluna comum (codparc) para a junção
+            AND LENGTH(e.cgcende) IN (14, 18);  -- Considera apenas CPFs e CNPJs com pontuação
+        `,
     };
 
     const handleQuery = async (queryKey) => {
@@ -39,7 +53,7 @@ const UpdateViewer = () => {
         <>
             <div className="updates" onClick={() => setIsOpen(!isOpen)}>
                 <div className="update-icon-container">
-                    <img src={updateIcon} alt="Log Icon" className="update-icon" />
+                    <img src={updateIcon} alt="update Icon" className="update-icon" />
                 </div>
             </div>
 
@@ -63,9 +77,12 @@ const UpdateViewer = () => {
                         <button className="query-button delete" onClick={() => handleQuery("deleteData")}>
                             Limpar Dados da Prod, Grad, Esto 
                         </button>
-                        <button className="query-button fetch" onClick={() => handleQuery("fetchData")}>
+                        <button className="query-button fetch" onClick={() => handleQuery("updateFandPJ")}>
                             Verificar Tipo de Pessoa
                             F ou PJ
+                        </button>
+                        <button className="query-button fetch" onClick={() => handleQuery("fetchData")}>
+                            TESTE
                         </button>
                     </div>
 

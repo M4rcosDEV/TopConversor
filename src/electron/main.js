@@ -3,9 +3,10 @@ import path from 'path'; // Certifique-se de importar 'path' aqui
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import ConexaoDB from './ConfigDatabase/ConexaoDB.js';
+import ConfigTheme from './ConfigApp/ConfigTheme.js';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
+const {loadConfig, saveConfig} = ConfigTheme;
 const { conectarBanco, inserirDados, executarQueryDefault} = ConexaoDB;
-
 
 let mainWindow;
 
@@ -120,6 +121,17 @@ ipcMain.handle('insert-data', async (event, dataToInsert, columnMapping) => {
 
         return { success: false, logs: [{ type: "error", message: error.message }] };
     }
+});
+
+ipcMain.handle('load-theme', () => {
+    const config = loadConfig();
+    return config.theme;
+});
+
+ipcMain.handle('save-theme', (event, theme) => {
+    const config = loadConfig();
+    config.theme = theme;
+    saveConfig(config);
 });
 
 ipcMain.handle('alter-password',  async (event, password) => {

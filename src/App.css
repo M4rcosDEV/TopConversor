@@ -162,6 +162,7 @@ header{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
   z-index: 1000; /* Certifica-se de que está acima de outros elementos */
   max-width: 300px; /* Largura máxima */
+  cursor: pointer;
 }
 
 .updates {
@@ -175,8 +176,22 @@ header{
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
   z-index: 1000; /* Certifica-se de que está acima de outros elementos */
   max-width: 300px; /* Largura máxima */
+  cursor: pointer;
 }
 
+.theme {
+  position: fixed;
+  top: 110px; /* Distância do topo */
+  right: 10px; /* Distância da direita */
+  background-color: #fff; /* Cor de fundo */
+  padding: 10px; /* Espaçamento interno */
+  border: 1px solid #ccc; /* Borda */
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  z-index: 1000; /* Certifica-se de que está acima de outros elementos */
+  max-width: 300px; /* Largura máxima */
+  cursor: pointer;
+}
 
 
 /* Estilos gerais para a barra de rolagem */
@@ -208,4 +223,44 @@ header{
 
 ::-webkit-scrollbar-thumb:horizontal {
   background: #888; /* Cor da barra de rolagem horizontal */
+}
+
+
+
+
+
+/* Tema Claro */
+body[data-theme='light'] {
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+/* Tema Escuro */
+body[data-theme='dark'] {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --cor-item-linha: #121212;
+}
+
+/* Aplicação das variáveis */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estilo do botão */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.8;
 }
