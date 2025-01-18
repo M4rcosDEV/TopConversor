@@ -9,12 +9,14 @@ import ColunasInformacao from './components/ColunasInformacao/ColunasInformacao'
 import { DataProvider } from './context/DataContext';
 import DialogoInformacao from './components/DialogoInformacao/DialogoInformacao';
 import LogViewer from './components/LogViewer/LogViewer';
+import UpdateViewer from './components/UpdateViewer/UpdateViewer';
 
 function App() {
   return (
     <DataProvider>
       <div>
       <header></header>
+      
       <section className='container-father'>
           <div className="triangulo"></div>
           <section className="container-header">
@@ -28,6 +30,7 @@ function App() {
             </div>
         </section> 
         <LogViewer/>
+        <UpdateViewer/>
       </section>
     
       <section className='container-main'>

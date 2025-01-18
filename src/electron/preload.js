@@ -18,6 +18,13 @@ contextBridge.exposeInMainWorld('database', {
         }
 });
 
+contextBridge.exposeInMainWorld("update", {
+    connect: async (query) => {
+        console.log("update chamado");
+        return await ipcRenderer.invoke("update-default", query);
+    },
+});
+
 contextBridge.exposeInMainWorld('api', {
     insertData: async (data, columnMapping) => {
         console.log('insert chamado'); 

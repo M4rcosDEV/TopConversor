@@ -2,11 +2,14 @@
     position: relative; /* Define a imagem como referência */
     width: 20px; /* Ajuste o tamanho do contêiner conforme necessário */
     height: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .log-icon {
     width: 100%; /* Garante que a imagem preencha o contêiner */
     height: 100%;
+    cursor: pointer;
 }
 
 .count-log {
@@ -24,22 +27,28 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adiciona sombra */
+    cursor: pointer;
 }
 
 /* Estilização principal do contêiner */
-.log-container-descricao
-{
-    display: absolute;
+.log-container-descricao {
+    position: fixed; /* Fixa o elemento na tela */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta o ponto de referência para o centro */
+    display: flex; /* Usa flexbox para centralizar conteúdo interno */
+    flex-direction: column; /* Organiza os itens em coluna */
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 2px;
     background-color: #f9f9f9;
+    width: 100vw;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 20px auto; /* Centraliza o contêiner horizontalmente */
+    max-width: 50%;
+    z-index: 9999; /* Garante que o contêiner fique acima de outros elementos */
 }
 
 /* Título */
@@ -54,7 +63,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 100%; /* Garante que os itens ocupem o espaço disponível */
+    width: 100%;
 }
 
 /* Itens da lista */
@@ -79,8 +88,34 @@
     color: #33cc33;
 }
 
-/* Hover para os itens */
-.log-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+/* Fundo escurecido para o modal */
+.log-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998; /* Fica abaixo do contêiner */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botão de fechamento ("X") */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #ff4d4d;
 }

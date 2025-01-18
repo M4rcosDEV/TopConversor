@@ -48,6 +48,17 @@ const executarQuery = async (query) => {
     }
 };
 
+const executarQueryDefault = async (query) => {
+    // Exemplo de função para executar a query
+    try {
+        const result = await database.query(query); // Certifique-se de que `database.query` está funcionando corretamente
+        return { success: true, result: result.rows }; // Supondo que o banco retorna um objeto com `rows`
+    } catch (error) {
+        console.error(`Erro ao executar query: ${error.message}`);
+        return { success: false, error: error.message }; // Retorna apenas a mensagem de erro
+    }
+};
+
 const obterMaximoValor = async (tabela, coluna) => {
     const query = `SELECT MAX(${coluna}) AS maxValor FROM ${tabela}`;
     const { success, result, error } = await executarQuery(query);
@@ -372,7 +383,7 @@ const inserirDados = async (dados, columnMapping) => {
     
 // }
 
-export default { conectarBanco, inserirDados };
+export default { conectarBanco, inserirDados, executarQueryDefault };
 
 
 

@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import ConexaoDB from './ConfigDatabase/ConexaoDB.js';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
-const { conectarBanco, inserirDados} = ConexaoDB;
+const { conectarBanco, inserirDados, executarQueryDefault} = ConexaoDB;
 
 
 let mainWindow;
@@ -84,6 +84,19 @@ ipcMain.handle('db-connect', async (event, dbName) => {
     } catch (error) {
         console.error('Erro ao conectar ao banco:', error);
         throw error; // Lança o erro para que o renderizador saiba que houve um erro
+    }
+});
+
+
+// Manipulador de eventos IPC
+ipcMain.handle("update-default", async (event, query) => {
+    try {
+        const result = await executarQueryDefault(query);
+        console.log("Resultado da atualização:", result);
+        return result; // Retorna o resultado ao renderer
+    } catch (error) {
+        console.error("Erro ao atualizar:", error.message);
+        return { success: false, error: error.message }; // Retorna o erro ao renderer
     }
 });
 

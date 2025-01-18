@@ -1,0 +1,115 @@
+.update-icon-container {
+    position: relative; /* Define a imagem como referência */
+    width: 20px; /* Ajuste o tamanho do contêiner conforme necessário */
+    height: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.update-icon {
+    width: 100%; /* Garante que a imagem preencha o contêiner */
+    height: 100%;
+    cursor: pointer;
+}
+
+
+/* Estilização principal do contêiner */
+.update-container-descricao {
+    position: fixed; /* Fixa o elemento na tela */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta o ponto de referência para o centro */
+    display: flex; /* Usa flexbox para centralizar conteúdo interno */
+    flex-direction: column; /* Organiza os itens em coluna */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: #f9f9f9;
+    width: 100vw;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 50%;
+    z-index: 9999; /* Garante que o contêiner fique acima de outros elementos */
+}
+
+/* Título */
+.update-container-descricao h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Lista de updates */
+.update-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+/* Itens da lista */
+.update-item {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Contêiner para os botões */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilo base para os botões */
+.query-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Cores específicas para cada ação */
+.query-button.delete {
+    background-color: #e74c3c;
+}
+
+.query-button.delete:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+.query-button.reset {
+    background-color: #f39c12;
+}
+
+.query-button.reset:hover {
+    background-color: #d35400;
+    transform: translateY(-2px);
+}
+
+.query-button.fetch {
+    background-color: #3498db;
+}
+
+.query-button.fetch:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Adiciona um efeito de clique */
+.query-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
