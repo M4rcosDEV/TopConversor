@@ -1,5 +1,6 @@
 import fs from 'fs';
 import pg from 'pg';
+import 'dotenv/config'
 import logger from '../Logger/logger.js';
 import ipcRenderer from 'electron';
 
@@ -10,7 +11,6 @@ let database;
 let senha;
 
 const alterarSenha = (novaSenha)  => {
-    console.log(`SENHA: ${novaSenha}`)
      senha = novaSenha;
 }
 
@@ -20,7 +20,7 @@ const conectarBanco = async (nomeBanco, senha) => {
     }
     database = new Pool({
         user: 'postgres',
-        password: senha || 'amstopams',
+        password: senha || process.env.DB_PASSWORD,
         host: 'localhost',
         port: '5432',
         database: nomeBanco,
