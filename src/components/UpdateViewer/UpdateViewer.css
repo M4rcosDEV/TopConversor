@@ -113,3 +113,23 @@
     transform: translateY(0);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+textarea#story {
+    background-color: #333131; /* Fundo escuro estilo terminal */
+    color: #00ff00; /* Texto verde estilo terminal */
+    font-family: 'Courier New', Courier, monospace; /* Fonte de terminal */
+    font-size: 14px; /* Tamanho da fonte */
+    border: 1px solid #555; /* Borda discreta */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    resize: none; /* Impede redimensionamento manual */
+    outline: none; /* Remove o contorno ao clicar */
+    width: 100%; /* Largura completa */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    transition: border-color 0.3s ease; /* Efeito ao focar */
+}
+
+textarea#story:focus {
+    border-color: #00ff00; /* Destaque ao focar */
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Sombra verde */
+}

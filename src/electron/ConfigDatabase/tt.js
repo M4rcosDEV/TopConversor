@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import pg from 'pg';
 import 'dotenv/config'
@@ -8,6 +7,18 @@ const { Pool } = pg
 let database;
 
 let senha;
+
+const obterDataAtual = () => {
+    const hoje = new Date();
+    const dia = String(hoje.getDate()).padStart(2, '0'); // Garante dois dígitos
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Mês começa em 0, então adicionamos 1
+    const ano = hoje.getFullYear();
+
+    return `${dia}-${mes}-${ano}`;
+};
+
+
+
 
 const alterarSenha = (novaSenha)  => {
      senha = novaSenha;
@@ -26,6 +37,8 @@ const conectarBanco = async (nomeBanco, senha) => {
     });
 
     console.log(`SENHA: ${senha}`)
+    console.log(obterDataAtual());
+
     try {
         await database.query('SELECT NOW()');
         console.log('Conectado ao banco de dados:', nomeBanco);
@@ -36,15 +49,6 @@ const conectarBanco = async (nomeBanco, senha) => {
     }
 
 }
-
-const obterDataAtual = () => {
-    const hoje = new Date();
-    const dia = String(hoje.getDate()).padStart(2, '0'); // Garante dois dígitos
-    const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Mês começa em 0, então adicionamos 1
-    const ano = hoje.getFullYear();
-
-    return `${dia}-${mes}-${ano}`;
-};
 
 const executarQuery = async (query) => {
     try {
@@ -207,82 +211,68 @@ const inserirDados = async (dados, columnMapping) => {
         return { success: false, logs };
     }
 
-    logs.push({ type: "info", message: `Maior codprod: ${maxCodProd}, maior codgrad: ${maxCodGrad}` });
+    logs.push({ type: "info",codprod:maxCodProd, codgrad:maxCodGrad, message: `Maior codprod: ${maxCodProd}, maior codgrad: ${maxCodGrad}` });
 
     const incrementoCodProd = parseInt(maxCodProd) + 1;
     const incrementoCodGrad = parseInt(maxCodGrad) + 1;
 
-    try {
-        // Inicia a transação
-        await database.query('BEGIN');
-        logs.push({ type: "info", message: "Transação iniciada." });
+    for (const [tabela, registros] of Object.entries(dadosPorTabela)) {
+        let registrosAtualizados = [...registros];
 
-        for (const [tabela, registros] of Object.entries(dadosPorTabela)) {
-            let registrosAtualizados = [...registros];
-
-            if (tabela === "tab_prod") {
-                registrosAtualizados = criarSequencia(registrosAtualizados, "codprod", incrementoCodProd);
-                registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
-                    codfili: '001',
-                    depprod: 0,
-                    tipprod: 'MA',
-                    negprod: 0,
-                    indprod:'F',
-                    tipipro:'00',
-                    endprop: 1
-                });
-            }
-    
-            if (tabela === "tab_grad") {
-                registrosAtualizados = registrosAtualizados.map((registro, index) => {
-                    registro.codgrad = incrementoCodGrad + index; // Incrementa codgrad sequencialmente
-                    registro.codprod = incrementoCodProd + index; // Incrementa codprod sequencialmente
-                    
-                    return registro;
-                    
-                });
-    
-                registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
-                    codidiv: 0,
-                    codisub: 0,
-                    margrad: -1,
-                    fgecomi: 0,
-                    filprod: '001',
-                    dtagrad: obterDataAtual(),
-                    ml_grad: ' ',
-                    usegrad: 1
-                });
-            }
-    
-            if (tabela === "tab_esto") {
-                registrosAtualizados = criarSequencia(registrosAtualizados, "codigra", incrementoCodGrad);
-                registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
-                    resiest: 0,
-                    filesto: '001',
-                    curvabc: 'N'
-                });
-            }
-
-            const { success, error } = await inserirRegistros(tabela, registrosAtualizados);
-            if (success) {
-                logs.push({ type: "success", message: `Inserção na tabela ${tabela} concluída.` });
-            } else {
-                throw new Error(`Erro ao inserir na tabela ${tabela}: ${error.message}`);
-            }
+        if (tabela === "tab_prod") {
+            registrosAtualizados = criarSequencia(registrosAtualizados, "codprod", incrementoCodProd);
+            registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
+                codfili: '001',
+                depprod: 0,
+                tipprod: 'MA',
+                negprod: 0,
+                indprod:'F',
+                tipipro:'00',
+                endprop: 1
+            });
         }
 
-        // Confirma a transação
-        await database.query('COMMIT');
-        logs.push({ type: "info", message: "Transação concluída com sucesso." });
+        if (tabela === "tab_grad") {
+            registrosAtualizados = registrosAtualizados.map((registro, index) => {
+                registro.codgrad = incrementoCodGrad + index; // Incrementa codgrad sequencialmente
+                registro.codprod = incrementoCodProd + index; // Incrementa codprod sequencialmente
+                
+                return registro;
+                
+            });
 
-        return { success: true, logs };
+            registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
+                codidiv: 0,
+                codisub: 0,
+                margrad: -1,
+                fgecomi: 0,
+                filprod: '001',
+                dtagrad: obterDataAtual(),
+                ml_grad: ' ',
+                usegrad: 1
+            });
+        }
 
-    } catch (error) {
-        // Reverte a transação em caso de erro
-        await database.query('ROLLBACK');
-        logs.push({ type: "error", message: `Erro na transação: ${error.message}. Todas as alterações foram desfeitas.` });
-        return { success: false, logs };
+        if (tabela === "tab_esto") {
+            registrosAtualizados = criarSequencia(registrosAtualizados, "codigra", incrementoCodGrad);
+            registrosAtualizados = preencherColunasComValores(registrosAtualizados, {
+                resiest: 0,
+                filesto: '001',
+                curvabc: 'N'
+            });
+        }
+
+        //registrosAtualizados = substituirNullPorZero(registrosAtualizados, ["codesto"]);
+
+        const { success, error } = await inserirRegistros(tabela, registrosAtualizados);
+        if (success) {
+            logs.push({ type: "success", message: `Inserção na tabela ${tabela} concluída.` });
+        } else {
+            logs.push({ type: "error", message: `Erro ao inserir na tabela ${tabela}: ${error.message}` });
+        }
     }
+
+    return { success: true, logs };
 };
 
 export default { conectarBanco, inserirDados, executarQueryDefault };

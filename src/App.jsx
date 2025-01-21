@@ -12,7 +12,9 @@ import LogViewer from './components/LogViewer/LogViewer';
 import UpdateViewer from './components/UpdateViewer/UpdateViewer';
 import ThemeSwitcher from './components/ThemeSwitcher/ThemeSwitcher';
 
+
 function App() {
+
   return (
     <DataProvider>
       <div>

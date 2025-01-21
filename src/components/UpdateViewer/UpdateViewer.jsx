@@ -11,9 +11,6 @@ const UpdateViewer = () => {
             DELETE FROM tab_grad;
             DELETE FROM tab_esto;
         `,
-        fetchData: `
-            SELECT * FROM tab_prod;
-        `,
         updateFandPJ: `
             update tab_ende set cgcende= cpf_cnpj(cgcende);
             update tab_parc set cnpparc= cpf_cnpj(cnpparc);
@@ -70,6 +67,12 @@ const UpdateViewer = () => {
                     </button>
                     <h3>UPDATE</h3>
                     <p>DB Manutenção</p>
+                    
+
+                    <textarea id="story" name="story" rows="5" cols="33">
+                   
+                    </textarea>
+
 
                     {/* Botões para executar diferentes queries */}
                     {/* Botões para executar diferentes queries */}
@@ -80,9 +83,6 @@ const UpdateViewer = () => {
                         <button className="query-button fetch" onClick={() => handleQuery("updateFandPJ")}>
                             Verificar Tipo de Pessoa
                             F ou PJ
-                        </button>
-                        <button className="query-button fetch" onClick={() => handleQuery("fetchData")}>
-                            TESTE
                         </button>
                     </div>
 

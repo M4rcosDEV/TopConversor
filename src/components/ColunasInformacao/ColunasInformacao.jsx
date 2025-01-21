@@ -3,8 +3,7 @@ import { DataContext } from "../../context/DataContext";
 import './ColunasInformacao.css';
 import DropdownSearch from '../DropdownSearch/DropdownSearch';
 import iconOpenBox from "../../assets/icons/open-box.png";
-import removeSelected from "../../assets/icons/remove_selection.png";
-import laughter from "../../assets/icons/laughter.png";
+import Swal from 'sweetalert2';
 
 export default function ColunasInformacao() {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -13,13 +12,13 @@ export default function ColunasInformacao() {
     const [opcoesDesativadas, setOpcoesDesativadas] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState({});
     const [columnMapping, setColumnMapping] = useState({});
-    const [count, setCount] = useState(0);
-    const imgMove = useRef(null);
-    const imglaughter = useRef(null);
     const {data} = useContext(DataContext);
     const {selectedTypeOption} = useContext(DataContext);
     const [colunaSelected, setColunaSelected] = useState([]);
     const {setLogs} = useContext(DataContext);
+    const [showInsertRequiredLog, setShowInsertRequiredLog] = useState([]);
+    const [execInsert, setExecInsert] = useState(false);
+    const [isConfirmed, setIsConfirmed] = useState(false);
     
       // const produto = [
       //    //tab_prod
@@ -57,14 +56,15 @@ export default function ColunasInformacao() {
       
       const produto = [
         //tab_prod
-        'codprod', 'nomprod', 
+        'nomprod', 'obsprod', 'desresu',
 
         //tab_grad
-        'codgrad', 'codprod','codidiv',
+        'codgrad', 'refgrad','codidiv',
         
         //tab_esto
-        'codesto', 'estiest', 
+        'codesto', 'estiest','prevend' 
       ]
+
       
       const cliente =[
         //tab_parc
@@ -93,6 +93,25 @@ export default function ColunasInformacao() {
         'idendpw', 'azulzon'
       ];
       
+      const showSuccess = () => {
+        Swal.fire({
+            title: 'Sucesso!',
+            text: 'Conversao realizada com sucesso.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+      };
+
+      const showError = () => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Verifique o log',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+      };
+    
+
       useEffect(() => {
         if (selectedTypeOption === 'Produtos') {
           setColunaSelected(produto);
@@ -103,20 +122,6 @@ export default function ColunasInformacao() {
         }
       }, [selectedTypeOption]); // Roda quando selectedTypeOption muda
 
-    const translateImg = () =>{
-      setCount(count + 1);
-      const randomX = (Math.random() - 0.5) * 1000;
-      const randomY = (Math.random() - 0.5) * 1000;
-      
-      imgMove.current.style.transform = `translate(${randomX}px, ${randomY}px)`;
-
-      if(count >= 10){
-          imglaughter.current.style.display = 'block'
-      }else{
-          imgMove.current.style.display = 'none'
-      }
-    };
-  
     //Aqui serve pra pegar a quantidade de dados para criar uma coluna para cada
     const columnNames = data && data.length > 0 ? Object.keys(data[0]) : [];
 
@@ -211,6 +216,21 @@ export default function ColunasInformacao() {
     
 
     const handleInsertData = async () => {
+      console.log(opcoesDesativadas);
+  
+      // Lista de itens obrigatórios
+      const requiredProd = ['nomprod', 'refgrad', 'estiest'];
+  
+      // Verifica quais itens de requiredProd ainda não estão em opcoesDesativadas
+      const missingItems = requiredProd.filter(item => !opcoesDesativadas.includes(item));
+  
+      // Se algum item estiver ausente, exibe o alerta
+      if (missingItems.length > 0) {
+          alert(`Precisa incluir: ${missingItems.join(', ')}`);
+          return; // Sai da função se houver itens ausentes
+      }
+  
+      // Verificações básicas
       if (!data || data.length === 0) {
           console.error("Nenhum dado disponível para inserir.");
           return;
@@ -235,24 +255,38 @@ export default function ColunasInformacao() {
   
       try {
           const result = await window.api.insertData(dataToInsert, columnMapping);
-          setLogs(result.logs)
-          
+  
+          // Define os logs diretamente
+          setLogs(result.logs);
+  
+          console.log(result);
           if (result.success) {
               console.log("Dados inseridos com sucesso!");
+              // Remove os itens incluídos da lista de desativados após a inserção
+              setOpcoesDesativadas(prevState => [
+                  ...prevState.filter(item => !missingItems.includes(item))
+              ]);
           } else {
               console.error("Erro ao inserir dados:", result.error);
           }
+  
+          // Verifica se há algum erro nos logs
+          const hasError = result.logs.some(log => log.type && log.type.includes("error"));
+          if (hasError) {
+              showError();
+          } else {
+              showSuccess();
+          }
       } catch (error) {
           console.error("Erro ao chamar a API:", error);
+          showError(); // Mostra erro genérico em caso de falha na API
       }
   };
   
+  
+  
     
-    //console.log(`COLUNAS DESATIVADAS${colunasDesativadas.map}`)
-
-    const testarColunas =()=>{
-      console.table(columnMapping);
-    }
+    console.log(opcoesDesativadas)
   
 
 return (
@@ -271,7 +305,6 @@ return (
                                         setSelectedOptions((prev) => ({ ...prev, [colName]: newOption }));
                                         handleColumnSelect(colName, newOption);
                                       }}
-                                      desativados={colunasDesativadas} 
                             />
                         
                         <div className='conteudo-coluna'>
@@ -286,7 +319,7 @@ return (
                 ) : (
             <div className='container-vazio'>
                 {/* <img ref={imglaughter} src={laughter} alt="Vazio" style={{display:'none'}}/> */}
-                <img ref={imgMove} src={iconOpenBox} alt="Vazio" className='icon-open-box'/>
+                <img src={iconOpenBox} alt="Vazio" className='icon-open-box'/>
                 <p >Nenhum dado disponível</p>
                 <p>{selectedTypeOption}</p>
             </div>
@@ -294,7 +327,6 @@ return (
         )}
     </div>
     <button onClick={handleInsertData}>Inserir Dados no Banco</button>
-    <button onClick={testarColunas}>Teste</button>
     </div>
   );
 }

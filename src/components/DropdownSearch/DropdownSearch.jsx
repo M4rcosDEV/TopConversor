@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import './DropdownSearch.css';
 import clearColuna from "../../assets/icons/borracha.png";
 
-function DropdownSearch({ itensList, nomeLabel, desativados, onSelect, renderOption }) {
+function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const menuRef = useRef(null);
   const selectRef = useRef(null);
-
-  //console.log(desativados)
 
   const toggleDropdownSearch = () => {
     setIsOpen(!isOpen);
@@ -48,6 +46,10 @@ function DropdownSearch({ itensList, nomeLabel, desativados, onSelect, renderOpt
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  
+  const removeItem = () => {
+    selectOption(null)
+  }
 
   return (
     <div>
@@ -65,7 +67,8 @@ function DropdownSearch({ itensList, nomeLabel, desativados, onSelect, renderOpt
             </span>
             <div className={`caret ${isOpen ? 'caret-rotate' : ''}`}></div>
           </div>
-          <img src={clearColuna} className="clear-option" onClick={() => selectOption(null)}/>
+          {/* <img src={clearColuna} className="clear-option" onClick={() => selectOption(null)}/> */}
+          <img src={clearColuna} className="clear-option" onClick={removeItem}/>
         </div>
         
         {isOpen && (
