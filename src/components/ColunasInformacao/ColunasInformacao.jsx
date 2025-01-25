@@ -19,56 +19,58 @@ export default function ColunasInformacao() {
     const [showInsertRequiredLog, setShowInsertRequiredLog] = useState([]);
     const [execInsert, setExecInsert] = useState(false);
     const [isConfirmed, setIsConfirmed] = useState(false);
+    const [requiredProd, setRequiredProd] = useState([]);
+    const {showInsertData, setShowInsertData} = useContext(DataContext);
     
-      // const produto = [
-      //    //tab_prod
-      //   'codprod', 'nomprod', 'espprod', 'graprod', 'codfabr', 'codfili', 'cl1prod', 'cl2prod', 
-      //   'cl3prod', 'cl4prod', 'depprod', 'tipprod', 'obsprod', 'desresu', 'fgedeci', 'xyzprod', 
-      //   'atuprod', 'cod_ipi', 'cod_irr', 'subfede', 'ncmprod', 'imgprod', 'refgrad', 'codgrad', 
-      //   'codregr', 'filfabr', 'marprod', 'negprod', 'indprod', 'tipipro', 'genepro', 'lisipro', 
-      //   'ex_prod', 'indprop', 'codprop', 'filprop', 'endprop', 'ctnprod', 'cbccpro', 'recprod', 
-      //   'prociap', 'prodepr', 'regr_sa', 'regr_en', 'parfide', 'escombo', 'agrgrad', 'lismate', 
-      //   'ctnfatu', 'syngrad', 'prouuid', 'negunid', 'divisa1', 'divisa2', 'divisa3', 'divisa4', 
-      //   'divisa5',
-
-      //    //tab_grad
-      //   'codgrad', 'codprod', 'codidiv', 'codisub', 'unvgrad', 'uncgrad', 'estmini', 'pesliqu', 
-      //   'pesbrut', 'desmaxi', 'percomi', 'margrad', 'fatconv', 'obsgrad', 'lo1grad', 'lo2grad', 
-      //   'ptopedi', 'fgecomi', 'refgrad', 'gragrad', 'filprod', 'lucgrad', 'pzorese', 'fgenser', 
-      //   'fgelote', 'fgelotv', 'cfdgrad', 'cffgrad', 'ncmgrad', 'dtagrad', 'ctngrad', 'md5grad', 
-      //   'codante', 'metgrad', 'tipcomi', 'sercomp', 'diaprox', 'mkpgrad', 'exc_ncm', 'codcest', 
-      //   'bcpicms', 'bcpicst', 'usesite', 'gtingra', 'proanpc', 'proanpd', 'tmpgrad', 'paigrad', 
-      //   'itempai', 'embgrad', 'maxacre', 'pglpgra', 'pgnngra', 'estaten', 'vpartgr', 'ml_grad', 
-      //   'diasgra', 'tribuid', 'iterele', 'itecnpj', 'datvenc', 'diavenc', 'livreid', 'cobenef', 
-      //   'usegrad', 'purgrad', 'gergrad', 'metrage', 'estomax', 'tzgrad', 'grauuid', 'ml_cate', 
-      //   'ml_idpd', 'lo3grad', 'vitrine', 'cfgbala', 'codanvi', 'motanvi', 'preanvi', 'multemp', 
-      //   'biograd', 'impcomb', 'ufocomb', 'pufcomb', 'deslivr', 'idivi_1', 'idivi_2', 'idivi_3', 
-      //   'idivi_4', 'idivi_5',
-
-      //    //tab_esto
-      //   'codigra', 'estiest', 'resiest', 'filesto', 'precomp', 'ultcust', 'cusmedi', 'cuspond', 
-      //   'prevend', 'preprom', 'preatac', 'proplan', 'prodtin', 'prodtfi', 'curvabc', 'estnega', 
-      //   'forlinh', 'codesto', 'ajuprec', 'qtdatac', 'custefe', 'pr1esto', 'pr2esto', 'qtdpend', 
-      //   'estuuid', 'intrasi', 'chegaem', 'vlrcomp', 'qtdprom', 'vqtprom', 'lo1esto', 'lo2esto', 
-      //   'lo3esto', 'obsprom', 'qtdata2', 'preata2', 'giroest'
-
-      // ];
-      
       const produto = [
-        //tab_prod
-        'nomprod', 'obsprod', 'desresu',
+         //tab_prod
+        'nomprod', 'espprod', 'graprod', 'codfabr', 'cl1prod', 'cl2prod', 
+        'cl3prod', 'cl4prod', 'depprod', 'tipprod', 'obsprod', 'desresu', 'fgedeci', 'xyzprod', 
+        'atuprod', 'cod_ipi', 'cod_irr', 'subfede', 'ncmprod', 'imgprod', 'refgrad', 'codgrad', 
+        'codregr', 'filfabr', 'marprod', 'negprod', 'indprod', 'tipipro', 'genepro', 'lisipro', 
+        'ex_prod', 'indprop', 'codprop', 'filprop', 'endprop', 'ctnprod', 'cbccpro', 'recprod', 
+        'prociap', 'prodepr', 'regr_sa', 'regr_en', 'parfide', 'escombo', 'agrgrad', 'lismate', 
+        'ctnfatu', 'syngrad', 'prouuid', 'negunid', 'divisa1', 'divisa2', 'divisa3', 'divisa4', 
+        'divisa5',
 
-        //tab_grad
-        'codgrad', 'refgrad','codidiv',
+         //tab_grad
+        'codidiv', 'codisub', 'unvgrad', 'uncgrad', 'estmini', 'pesliqu', 
+        'pesbrut', 'desmaxi', 'percomi', 'margrad', 'fatconv', 'obsgrad', 'lo1grad', 'lo2grad', 
+        'ptopedi', 'fgecomi', 'refgrad', 'gragrad', 'filprod', 'lucgrad', 'pzorese', 'fgenser', 
+        'fgelote', 'fgelotv', 'cfdgrad', 'cffgrad', 'ncmgrad', 'dtagrad', 'ctngrad', 'md5grad', 
+        'codante', 'metgrad', 'tipcomi', 'sercomp', 'diaprox', 'mkpgrad', 'exc_ncm', 'codcest', 
+        'bcpicms', 'bcpicst', 'usesite', 'gtingra', 'proanpc', 'proanpd', 'tmpgrad', 'paigrad', 
+        'itempai', 'embgrad', 'maxacre', 'pglpgra', 'pgnngra', 'estaten', 'vpartgr', 'ml_grad', 
+        'diasgra', 'tribuid', 'iterele', 'itecnpj', 'datvenc', 'diavenc', 'livreid', 'cobenef', 
+        'usegrad', 'purgrad', 'gergrad', 'metrage', 'estomax', 'tzgrad', 'grauuid', 'ml_cate', 
+        'ml_idpd', 'lo3grad', 'vitrine', 'cfgbala', 'codanvi', 'motanvi', 'preanvi', 'multemp', 
+        'biograd', 'impcomb', 'ufocomb', 'pufcomb', 'deslivr', 'idivi_1', 'idivi_2', 'idivi_3', 
+        'idivi_4', 'idivi_5',
+
+         //tab_esto
+        'codigra', 'estiest', 'resiest', 'filesto', 'precomp', 'ultcust', 'cusmedi', 'cuspond', 
+        'prevend', 'preprom', 'preatac', 'proplan', 'prodtin', 'prodtfi', 'curvabc', 'estnega', 
+        'forlinh', 'codesto', 'ajuprec', 'qtdatac', 'custefe', 'pr1esto', 'pr2esto', 'qtdpend', 
+        'estuuid', 'intrasi', 'chegaem', 'vlrcomp', 'qtdprom', 'vqtprom', 'lo1esto', 'lo2esto', 
+        'lo3esto', 'obsprom', 'qtdata2', 'preata2', 'giroest'
+
+      ];
+      
+      // const produto = [
+      //   //tab_prod
+      //   'nomprod', 'obsprod', 'desresu',
+
+      //   //tab_grad
+      //   'codgrad', 'refgrad','codidiv',
         
-        //tab_esto
-        'codesto', 'estiest','prevend' 
-      ]
+      //   //tab_esto
+      //   'codesto', 'estiest','prevend' 
+      // ]
 
       
       const cliente =[
         //tab_parc
-        'codparc', 'nomparc', 'codfili', 'sobparc', 'cnpparc', 'regparc', 'nasparc', 'cadparc', 
+        'nomparc', 'sobparc', 'cnpparc', 'regparc', 'nasparc', 'cadparc', 
         'altparc', 'obsparc', 'homparc', 'emaparc', 'venpref', 'plapref', 'cobpref', 'spccons', 
         'negparc', 'ultcont', 'ultvend', 'filaval', 'codaval', 'limcred', 'doctipo', 'estcivi', 
         'sexparc', 'pesparc', 'codocup', 'nacparc', 'natparc', 'ctpparc', 'cnhparc', 'cat_cnh', 
@@ -83,13 +85,13 @@ export default function ColunasInformacao() {
       'update_at', 'ctaclie', 'ctaforn', 'custpad', 'logcadw', 'fgelgpd', 'percomi', 'dia_lib',
 
         //tab_ende
-        'codparc', 'fonende', 'cgcende', 'ieende', 'endende', 'baiende', 'codcida', 'cepende', 
-        'numende', 'nomende', 'filparc', 'faxende', 'celende', 'ddd_fon', 'complem', 'referen', 
+        'fonende', 'ieende',  'endende', 'baiende', 'codcida', 'cepende', 
+        'numende', 'nomende', 'faxende', 'celende', 'ddd_fon', 'complem', 'referen', 
         'tiplogr', 'nommuni', 'uf_ende', 'paiende', 'ordende', 'iesende', 'sufende', 'optsimp', 
         'im_ende', 'ctbicms', 'ramtelf', 'nomgest', 'cpfgest', 'emagest', 'crggest', 'ftaparc', 
         'prlparc', 'cpsparc', 'dafparc', 'temresi', 'numfunc', 'vlraluq', 'cnaeend', 'tpeende', 
         'ip_ende', 'pe_ende', 'ireende', 'gpslong', 'gpslati', 'asfende', 'estende', 'entende', 
-        'seqende', 'nom_end', 'iiedest', 'regimet', 'coddeli', 'codtaen', 'update_at', 'fgeende', 
+        'nom_end', 'iiedest', 'regimet', 'coddeli', 'codtaen', 'update_at', 'fgeende', 
         'idendpw', 'azulzon'
       ];
       
@@ -115,8 +117,10 @@ export default function ColunasInformacao() {
       useEffect(() => {
         if (selectedTypeOption === 'Produtos') {
           setColunaSelected(produto);
+          setRequiredProd(['nomprod', 'refgrad', 'estiest'])
         } else if (selectedTypeOption === 'Clientes') {
           setColunaSelected(cliente);
+          setRequiredProd(['nomparc', 'nommuni', 'cepende'])
         } else {
           setColunaSelected([]);
         }
@@ -217,10 +221,7 @@ export default function ColunasInformacao() {
 
     const handleInsertData = async () => {
       console.log(opcoesDesativadas);
-  
-      // Lista de itens obrigatórios
-      const requiredProd = ['nomprod', 'refgrad', 'estiest'];
-  
+      
       // Verifica quais itens de requiredProd ainda não estão em opcoesDesativadas
       const missingItems = requiredProd.filter(item => !opcoesDesativadas.includes(item));
   
@@ -254,7 +255,8 @@ export default function ColunasInformacao() {
       console.table(dataToInsert);
   
       try {
-          const result = await window.api.insertData(dataToInsert, columnMapping);
+       
+          const result = await window.api.insertData(dataToInsert, columnMapping, selectedTypeOption);
   
           // Define os logs diretamente
           setLogs(result.logs);
@@ -326,7 +328,17 @@ return (
             
         )}
     </div>
-    <button onClick={handleInsertData}>Inserir Dados no Banco</button>
+    {
+      showInsertData ? (
+        <div className="wrapper" onClick={handleInsertData}>
+          <a className="insert"  href="#"><span>Inserir Dados</span></a>
+        </div>
+        // <button onClick={handleInsertData}>Inserir Dados no Banco</button>
+      ): null
+
+
+    }
+    
     </div>
   );
 }

@@ -14,6 +14,7 @@ import DialogoInformacao from "../DialogoInformacao/DialogoInformacao";
 export default function Formulario() {
   const {data, setData} = useContext(DataContext);
   const {selectedTypeOption, setSelectedTypeOption} = useContext(DataContext);
+  const {showInsertData, setShowInsertData} = useContext(DataContext);
   const [databaseName, setDatabaseName] = useState('');
   const [connectionStatus, setConnectionStatus] = useState('');
   const [filePath, setFilePath] = useState('');
@@ -128,6 +129,7 @@ export default function Formulario() {
             console.log('Erro ao carregar dados', error);
           } finally {
             setLoading(false);
+            setShowInsertData(true);
           }
         }, 1000);
       }else{

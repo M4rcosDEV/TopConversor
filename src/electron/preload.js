@@ -26,10 +26,10 @@ contextBridge.exposeInMainWorld("update", {
 });
 
 contextBridge.exposeInMainWorld('api', {
-    insertData: async (data, columnMapping) => {
+    insertData: async (data, columnMapping, tipoConversao) => {
         console.log('insert chamado'); 
         console.log(`TESTE: ${data} - ${columnMapping}`);
-        return await ipcRenderer.invoke('insert-data', data, columnMapping)
+        return await ipcRenderer.invoke('insert-data', data, columnMapping, tipoConversao)
     }   
 });
 

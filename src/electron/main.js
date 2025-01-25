@@ -6,7 +6,7 @@ import ConexaoDB from './ConfigDatabase/ConexaoDB.js';
 import ConfigTheme from './ConfigApp/ConfigTheme.js';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
 const {loadConfig, saveConfig} = ConfigTheme;
-const { conectarBanco, inserirDados, executarQueryDefault} = ConexaoDB;
+const { conectarBanco, inserirDadosProdutos, inserirDadosClientes, executarQueryDefault} = ConexaoDB;
 
 let mainWindow;
 
@@ -101,7 +101,8 @@ ipcMain.handle("update-default", async (event, query) => {
     }
 });
 
-ipcMain.handle('insert-data', async (event, dataToInsert, columnMapping) => {
+ipcMain.handle('insert-data', async (event, dataToInsert, columnMapping, tipoConversao) => {
+    console.log(`TIPO DE CONVERSAO: ${tipoConversao}`);
     if (!dataToInsert || dataToInsert.length === 0) {
         console.error('Nenhum dado para inserir');
         return { success: false, error: 'Nenhum dado para inserir' };
@@ -113,9 +114,18 @@ ipcMain.handle('insert-data', async (event, dataToInsert, columnMapping) => {
     }
 
     try {
-        const result = await inserirDados(dataToInsert, columnMapping);
-        console.log('Resultado do insert:', result);
-        return result;
+        if(tipoConversao === 'Produtos'){
+            const result = await inserirDadosProdutos(dataToInsert, columnMapping);
+            console.log('Resultado do insert Produtos:', result);
+            return result;
+        }else if(tipoConversao === 'Clientes'){
+            const result = await inserirDadosClientes(dataToInsert, columnMapping);
+            console.log('Resultado do insert Clientes:', result);
+            return result;
+        }else{
+            return { success: false, error: 'Tipo de conversão não suportado.' };
+        }
+        
     } catch (error) {
         console.error('Erro ao fazer o insert:', error);
 
@@ -193,3 +203,4 @@ app.on('activate', function () {
 });
 
 
+export default { notification }
