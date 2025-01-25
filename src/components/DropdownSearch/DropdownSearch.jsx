@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './DropdownSearch.css';
 import clearColuna from "../../assets/icons/borracha.png";
 
-function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption }) {
+function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption, descricoes }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -86,6 +86,7 @@ function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption }) {
                 filteredOptions.map((option, index) => (
                   <li
                     key={index}
+                    title={descricoes[option] || "Descrição não disponível"} // Adiciona o significado como tooltip
                     className={`option-item ${selectedOption === option ? 'selected' : ''} `}
                     onClick={() =>  selectOption(option)}//!desativados.includes(option) &&
                     style={{
@@ -113,6 +114,7 @@ DropdownSearch.propTypes = {
   onSelect: PropTypes.func,
   renderOption: PropTypes.func,
   desativados: PropTypes.arrayOf(PropTypes.string),
+  descricoes: PropTypes.objectOf(PropTypes.string), // Novo propType para descrições
 };
 
 export default DropdownSearch;

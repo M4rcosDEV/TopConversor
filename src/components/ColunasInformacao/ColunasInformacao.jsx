@@ -4,6 +4,7 @@ import './ColunasInformacao.css';
 import DropdownSearch from '../DropdownSearch/DropdownSearch';
 import iconOpenBox from "../../assets/icons/open-box.png";
 import Swal from 'sweetalert2';
+import descricaoColuna from './descricaoColuna';
 
 export default function ColunasInformacao() {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -26,7 +27,7 @@ export default function ColunasInformacao() {
          //tab_prod
         'nomprod', 'espprod', 'graprod', 'codfabr', 'cl1prod', 'cl2prod', 
         'cl3prod', 'cl4prod', 'depprod', 'tipprod', 'obsprod', 'desresu', 'fgedeci', 'xyzprod', 
-        'atuprod', 'cod_ipi', 'cod_irr', 'subfede', 'ncmprod', 'imgprod', 'refgrad', 'codgrad', 
+        'atuprod', 'cod_ipi', 'cod_irr', 'subfede', 'ncmprod', 'imgprod', 
         'codregr', 'filfabr', 'marprod', 'negprod', 'indprod', 'tipipro', 'genepro', 'lisipro', 
         'ex_prod', 'indprop', 'codprop', 'filprop', 'endprop', 'ctnprod', 'cbccpro', 'recprod', 
         'prociap', 'prodepr', 'regr_sa', 'regr_en', 'parfide', 'escombo', 'agrgrad', 'lismate', 
@@ -95,6 +96,9 @@ export default function ColunasInformacao() {
         'idendpw', 'azulzon'
       ];
       
+      
+      
+
       const showSuccess = () => {
         Swal.fire({
             title: 'Sucesso!',
@@ -150,7 +154,7 @@ export default function ColunasInformacao() {
         //console.log('Opção selecionada:', option); 
       };
 
-    
+      
 
       
 
@@ -307,6 +311,7 @@ return (
                                         setSelectedOptions((prev) => ({ ...prev, [colName]: newOption }));
                                         handleColumnSelect(colName, newOption);
                                       }}
+                                      descricoes={descricaoColuna}
                             />
                         
                         <div className='conteudo-coluna'>
