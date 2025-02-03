@@ -9,6 +9,7 @@ function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption, descrico
   const [searchTerm, setSearchTerm] = useState('');
   const menuRef = useRef(null);
   const selectRef = useRef(null);
+  const inputRef = useRef(null); // Referência para o input de busca
 
   const toggleDropdownSearch = () => {
     setIsOpen(!isOpen);
@@ -29,9 +30,8 @@ function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption, descrico
     option.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  useEffect(() => { 
-
-    
+  // Efeito para fechar o dropdown ao clicar fora
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         menuRef.current && !menuRef.current.contains(event.target) &&
@@ -46,10 +46,17 @@ function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption, descrico
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  
+
+  // Efeito para focar no input de busca quando o dropdown é aberto
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus(); // Aplica o foco ao input de busca
+    }
+  }, [isOpen]); // Executa sempre que isOpen mudar
+
   const removeItem = () => {
-    selectOption(null)
-  }
+    selectOption(null);
+  };
 
   return (
     <div>
@@ -67,32 +74,28 @@ function DropdownSearch({ itensList, nomeLabel, onSelect, renderOption, descrico
             </span>
             <div className={`caret ${isOpen ? 'caret-rotate' : ''}`}></div>
           </div>
-          {/* <img src={clearColuna} className="clear-option" onClick={() => selectOption(null)}/> */}
-          <img src={clearColuna} className="clear-option" onClick={removeItem}/>
+          <img src={clearColuna} className="clear-option" onClick={removeItem} />
         </div>
-        
+
         {isOpen && (
           <div className="dropdownSearch-menu" ref={menuRef}>
             <ul className={`menu ${isOpen ? 'menu-open' : ''}`}>
               <input
+                ref={inputRef} // Referência para o input de busca
                 type="text"
                 className="search-input"
                 placeholder="Digite o nome da coluna..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              
+
               {filteredOptions.length > 0 ? (
                 filteredOptions.map((option, index) => (
                   <li
                     key={index}
                     title={descricoes[option] || "Descrição não disponível"} // Adiciona o significado como tooltip
-                    className={`option-item ${selectedOption === option ? 'selected' : ''} `}
-                    onClick={() =>  selectOption(option)}//!desativados.includes(option) &&
-                    style={{
-                      // cursor: desativados.includes(option) ? 'not-allowed' : 'pointer',
-                      // color: desativados.includes(option) ? 'red' : '#000',
-                    }}
+                    className={`option-item ${selectedOption === option ? 'selected' : ''}`}
+                    onClick={() => selectOption(option)}
                   >
                     {renderOption ? renderOption(option) : option}
                   </li>
@@ -113,7 +116,6 @@ DropdownSearch.propTypes = {
   nomeLabel: PropTypes.string.isRequired,
   onSelect: PropTypes.func,
   renderOption: PropTypes.func,
-  desativados: PropTypes.arrayOf(PropTypes.string),
   descricoes: PropTypes.objectOf(PropTypes.string), // Novo propType para descrições
 };
 

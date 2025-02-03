@@ -8,7 +8,7 @@
     const [filePath, setFilePath] = useState('');
     const [selectedTypeOption, setSelectedTypeOption] = useState(''); 
     const [logs, setLogs] = useState([]);
-    const [showInsertData, setShowInsertData] = useState(false);
+    const [showInsertData, setShowInsertData] = useState( );
 
     return (
       <DataContext.Provider value={

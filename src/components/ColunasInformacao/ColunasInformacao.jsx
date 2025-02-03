@@ -5,6 +5,7 @@ import DropdownSearch from '../DropdownSearch/DropdownSearch';
 import iconOpenBox from "../../assets/icons/open-box.png";
 import Swal from 'sweetalert2';
 import descricaoColuna from './descricaoColuna';
+import Loading from '../Loading/Loading';
 
 export default function ColunasInformacao() {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -22,6 +23,7 @@ export default function ColunasInformacao() {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [requiredProd, setRequiredProd] = useState([]);
     const {showInsertData, setShowInsertData} = useContext(DataContext);
+    const [loading, setLoading] = useState(false);
     
       const produto = [
          //tab_prod
@@ -224,25 +226,29 @@ export default function ColunasInformacao() {
     
 
     const handleInsertData = async () => {
+      setLoading(true); // Ativa o loading no início da função
       console.log(opcoesDesativadas);
-      
+  
       // Verifica quais itens de requiredProd ainda não estão em opcoesDesativadas
       const missingItems = requiredProd.filter(item => !opcoesDesativadas.includes(item));
   
       // Se algum item estiver ausente, exibe o alerta
       if (missingItems.length > 0) {
           alert(`Precisa incluir: ${missingItems.join(', ')}`);
+          setLoading(false); // Desativa o loading se houver itens ausentes
           return; // Sai da função se houver itens ausentes
       }
   
       // Verificações básicas
       if (!data || data.length === 0) {
           console.error("Nenhum dado disponível para inserir.");
+          setLoading(false); // Desativa o loading se não houver dados
           return;
       }
   
       if (Object.keys(columnMapping).length === 0) {
           console.error("Nenhuma coluna mapeada. Verifique o mapeamento.");
+          setLoading(false); // Desativa o loading se não houver colunas mapeadas
           return;
       }
   
@@ -259,7 +265,6 @@ export default function ColunasInformacao() {
       console.table(dataToInsert);
   
       try {
-       
           const result = await window.api.insertData(dataToInsert, columnMapping, selectedTypeOption);
   
           // Define os logs diretamente
@@ -286,18 +291,21 @@ export default function ColunasInformacao() {
       } catch (error) {
           console.error("Erro ao chamar a API:", error);
           showError(); // Mostra erro genérico em caso de falha na API
+      } finally {
+          setLoading(false); // Desativa o loading após a conclusão (sucesso ou erro)
       }
   };
-  
   
   
     
     console.log(opcoesDesativadas)
   
 
+    
 return (
     <div>
     <div className='colunas'>
+      {loading && <Loading/>}
     {data && data.length > 0 ? (
                     // Para cada coluna, exibi uma lista dos valores dessa coluna em todos os itens de data
                     columnNames.map((colName, colIndex) => (
@@ -305,7 +313,7 @@ return (
                         
                             <DropdownSearch 
                                       itensList={colunaSelected.filter((coluna) => !opcoesDesativadas.includes(coluna))} 
-                                      nomeLabel={`Escolha a coluna ${colName}`} 
+                                      nomeLabel={`Escolher coluna para vincular`} 
                                       onSelect={(newOption) => {
                                         handleOptionChange(colName, selectedOptions[colName], newOption);
                                         setSelectedOptions((prev) => ({ ...prev, [colName]: newOption }));

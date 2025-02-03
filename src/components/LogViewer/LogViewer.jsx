@@ -12,9 +12,9 @@ const LogViewer = () => {
         console.log(`Logs retornados:${logs[i].message}`);
     }
 
-    const handleclick = () => {
-        setIsOpen(!isOpen);
-    }
+        const handleclick = () => {
+            setIsOpen(!isOpen);
+        }
 
     return (
         <>

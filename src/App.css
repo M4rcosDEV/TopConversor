@@ -42,7 +42,7 @@
 } */
 @font-face {
   font-family: 'fontMontserratbold';
-  src: url('../../assets/fonts/Montserrat-Bold.ttf') format('ttf');
+  src: url('./Montserrat-Bold.ttf') format('ttf');
   font-weight: bold; 
 }
 

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog, Notification } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, Notification, Menu } from 'electron';
 import path from 'path'; // Certifique-se de importar 'path' aqui
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -14,6 +14,7 @@ let mainWindow;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 console.log(path.join(__dirname, '..', 'assets', 'Logo_Conversor.png'))
+console.log(path.join(__dirname, "../../dist/index.html"))
 // Imprime o caminho do preload.js para depuração
 console.log(`DINARME: ${__dirname}/preload.js`);
 
@@ -21,6 +22,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 720,
+        icon: path.join(__dirname, '..', 'assets', 'icons', 'icon.ico'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'), // Caminho correto
             contextIsolation: true,
@@ -29,7 +31,14 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadURL('http://localhost:5173/'); // Pra desenvolvimento
+   
+        mainWindow.loadURL('http://localhost:5173/'); //dev
+        Menu.setApplicationMenu(null);
+
+        //mainWindow.loadFile(path.join(__dirname, "../../dist/index.html")); //prod
+   
+
+    Menu.setApplicationMenu(null);
 
     mainWindow.on('closed', function () {
         mainWindow = null;
@@ -145,9 +154,9 @@ ipcMain.handle('save-theme', (event, theme) => {
 });
 
 ipcMain.handle('alter-password',  async (event, password) => {
-    // if (!dbNameGlobal) {
-    //     throw new Error("Nome do banco de dados não foi definido. Conecte-se ao banco primeiro.");
-    // }
+    if (!dbNameGlobal) {
+        throw new Error("Nome do banco de dados não foi definido. Conecte-se ao banco primeiro.");
+    }
 
     try {
         const result = await conectarBanco(dbNameGlobal, password); // Usa o nome armazenado do banco

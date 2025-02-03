@@ -27,7 +27,7 @@ const conectarBanco = async (nomeBanco, senha) => {
     }
     database = new Pool({
         user: 'postgres',
-        password: senha || process.env.DB_PASSWORD,
+        password: senha || 'amstopams',
         host: 'localhost',
         port: '5432',
         database: nomeBanco,

@@ -1,21 +1,68 @@
 {
-  "name": "top-conversor-teste",
+  "name": "top-conversor",
   "private": true,
   "main": "src/electron/main.js",
+  "description": "Um conversor de bases de dados.",
+  "author": "Marcos Vinicius <marcosifba01@gmail.com>",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && electron-builder",
     "lint": "eslint .",
     "preview": "vite preview",
-    "electron": "electron src/electron/main.js"
+    "electron": "electron src/electron/main.js",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.top-conversor",
+    "win": {
+      "target": "portable",
+      "icon": "src/assets/icons/icon.ico",
+      "artifactName": "top-conversor-version-0.0.1.exe"
+    },
+    "productName": "Top Conversor",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "dist/**/*",
+      "src/electron/**/*",
+      "src/assets/**/*",
+      "package.json",
+      "node_modules/ffmpeg-static/ffmpeg.exe"
+    ],
+    "extraResources": [
+      {
+        "from": "src/electron/ConfigDatabase",
+        "to": "ConfigDatabase",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "src/assets",
+        "to": "assets",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
   "dependencies": {
     "@fontsource/roboto": "^5.1.0",
     "@react-spring/web": "^9.7.5",
     "@use-gesture/react": "^10.3.1",
+    "custom-electron-titlebar": "^4.2.8",
     "dotenv": "^16.4.7",
+    "ffmpeg-static": "^5.2.0",
     "pg": "^8.13.1",
     "primereact": "^10.8.4",
     "react": "^18.3.1",
@@ -33,6 +80,7 @@
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
     "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
     "eslint": "^9.13.0",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^5.0.0",

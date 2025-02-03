@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';import "./SelectOption.css"
+import React, { useEffect, useState } from 'react';
+import "./SelectOption.css"
 
 export default function SelectOption({options}) {
 
