@@ -6,7 +6,12 @@ import ConexaoDB from './ConfigDatabase/ConexaoDB.js';
 import ConfigTheme from './ConfigApp/ConfigTheme.js';
 import LeitorExcel from './ConfigReadyExcel/LeitorExcel.js';
 const {loadConfig, saveConfig} = ConfigTheme;
-const { conectarBanco, inserirDadosProdutos, inserirDadosClientes, executarQueryDefault} = ConexaoDB;
+const {conectarBanco, inserirDadosProdutos, inserirDadosClientes, executarQueryDefault} = ConexaoDB;
+
+import BusinessDB from './ConfigDatabase/BusinessDB.js';
+const {transferirDadosProduto} = BusinessDB;
+
+transferirDadosProduto('origem', 'destino');
 
 let mainWindow;
 
@@ -33,7 +38,7 @@ function createWindow() {
 
    
         mainWindow.loadURL('http://localhost:5173/'); //dev
-        Menu.setApplicationMenu(null);
+        //Menu.setApplicationMenu(null);
 
         //mainWindow.loadFile(path.join(__dirname, "../../dist/index.html")); //prod
    

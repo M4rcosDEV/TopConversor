@@ -8,6 +8,7 @@ import xlsx from 'xlsx';
 import notificacao from '../main.js'
 import { dirname } from 'path';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -500,4 +501,4 @@ const inserirDadosProdutos = async (dados, columnMapping) => {
     }
 };
 
-export default { conectarBanco, inserirDadosProdutos, inserirDadosClientes, executarQueryDefault };
+export default { conectarBanco, inserirDadosProdutos, inserirDadosClientes, executarQueryDefault, obterMaximoValor };
