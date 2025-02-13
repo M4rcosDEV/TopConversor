@@ -9,9 +9,9 @@ const {loadConfig, saveConfig} = ConfigTheme;
 const {conectarBanco, inserirDadosProdutos, inserirDadosClientes, executarQueryDefault} = ConexaoDB;
 
 import BusinessDB from './ConfigDatabase/BusinessDB.js';
-const {transferirDadosProduto} = BusinessDB;
+const {transferirTabEsto} = BusinessDB;
 
-transferirDadosProduto('origem', 'destino');
+transferirTabEsto('origem', 'destino');
 
 let mainWindow;
 
